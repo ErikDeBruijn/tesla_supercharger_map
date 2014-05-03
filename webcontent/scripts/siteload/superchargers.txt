@@ -1502,26 +1502,38 @@ status: CONSTRUCTION
 ##################################################################################################################
 
 #-----------------------------------------------------------------------------------------------------------------------------| China
-name: Beijing, China
-street: 10 JiuXianQiao Road
-city: Beijing
+#name: Beijing, China
+#street: 10 JiuXianQiao Road
+#city: Beijing
+#state:
+#zip: 100015
+#country: China
+#gps: 39.984162, 116.495744
+#elevation: 42
+#url: http://www.teslamotorsclub.com/showthread.php/30064-Elon-will-deliver-the-first-batch-of-Model-S-to-Chinese-customers-on-April-22nd
+#urlDiscuss: http://www.teslamotorsclub.com/showthread.php/30064-Elon-will-deliver-the-first-batch-of-Model-S-to-Chinese-customers-on-April-22nd
+#dateOpened: 2014-04-23
+#- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+name: Jiading, China
+street: near Jiading Auto City
+city: Shanghai
 state:
-zip: 100015
+zip:
 country: China
-gps: 39.984162, 116.495744
-elevation: 42
-url: http://www.teslamotorsclub.com/showthread.php/30064-Elon-will-deliver-the-first-batch-of-Model-S-to-Chinese-customers-on-April-22nd
+gps: 31.281500, 121.162917
+elevation: 4
+url: http://www.teslamotors.com/supercharger/jiading
 urlDiscuss: http://www.teslamotorsclub.com/showthread.php/30064-Elon-will-deliver-the-first-batch-of-Model-S-to-Chinese-customers-on-April-22nd
 dateOpened: 2014-04-23
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-name: Shanghai, China
-street: 518 LanTian Road
+name: Jinqiao, China
+street: No.518 lantian RD, jinqiao Pudong district
 city: Shanghai
 state:
-zip: 201206
+zip:
 country: China
-gps: 31.239993, 121.579461
-elevation: 2
-url: http://www.teslamotorsclub.com/showthread.php/30064-Elon-will-deliver-the-first-batch-of-Model-S-to-Chinese-customers-on-April-22nd
+gps: 31.242917, 121.575333
+elevation: 4
+url: http://www.teslamotors.com/supercharger/jinqiao
 urlDiscuss: http://www.teslamotorsclub.com/showthread.php/30064-Elon-will-deliver-the-first-batch-of-Model-S-to-Chinese-customers-on-April-22nd
 dateOpened: 2014-04-23
