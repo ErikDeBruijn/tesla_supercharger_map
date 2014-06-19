@@ -19,7 +19,7 @@ define(['util/Objects'], function (Objects) {
     };
 
     SitePredicates.IS_OPEN_AND_COUNTED = function (site) {
-        return SitePredicates.open(site) && SitePredicates.counted(site);
+        return SitePredicates.IS_OPEN(site) && SitePredicates.IS_COUNTED(site);
     };
 
     SitePredicates.HAS_CIRCLE = function (site) {
