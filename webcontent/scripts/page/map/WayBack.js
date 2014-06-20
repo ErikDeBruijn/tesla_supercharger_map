@@ -10,14 +10,14 @@ define(['site/SiteIterator', 'site/SiteSorting', 'site/SitePredicates'],
 
             $(".layout-header")
                 .append("<div style='height: 3em; background: black; width: 100%; vertical-align: middle'>" +
-                    "<div id='way-back-date' style='font-weight: bold; color: white; text-align: center; vertical-align: middle'>" +
+                    "<div id='way-back-date' style='font-weight: bold; color: white; text-align: center; font-size: 2em'>" +
                     "</div>" +
                     "</div>"
             );
 
             this.dateDiv = $("#way-back-date");
             this.lastInfoWindow = null;
-            this.index = 0;
+            this.index = -1;
 
             this.superchargers = new SiteIterator()
                 .withSort(SiteSorting.BY_OPENED_DATE)
@@ -57,26 +57,22 @@ define(['site/SiteIterator', 'site/SiteSorting', 'site/SitePredicates'],
             if (this.lastInfoWindow != null) {
                 this.lastInfoWindow.close();
             }
-
             var infoWindow = new google.maps.InfoWindow({
                 content: supercharger.displayName
             });
             infoWindow.open(this.googleMap, supercharger.marker);
-
             this.lastInfoWindow = infoWindow;
-
         };
 
 
         WayBack.prototype.doNext = function () {
-            var targetFunction = jQuery.proxy(this.doNext, this);
-            if (this.superchargers.length > 0) {
+            this.index++;
+            if (this.index < this.superchargers.length - 1) {
                 this.showNextDate();
                 this.showNextInfoWindow();
-                this.showNextMarker();
-                setTimeout(targetFunction, 1000);
+                setTimeout(jQuery.proxy(this.showNextMarker, this), 350);
+                setTimeout(jQuery.proxy(this.doNext, this), 1350);
             }
-            this.index++;
         };
 
         return WayBack;
