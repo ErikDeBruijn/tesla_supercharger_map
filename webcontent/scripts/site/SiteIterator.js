@@ -1,4 +1,4 @@
-define(['util/Objects', 'site/Sites', 'site/SitePredicates', 'site/SiteSorting'], function (Objects, Sites, SitePredicates, SiteSorting) {
+define(['util/Objects', 'site/Sites'], function (Objects, Sites) {
 
     /**
      *
@@ -45,6 +45,15 @@ define(['util/Objects', 'site/Sites', 'site/SitePredicates', 'site/SiteSorting']
         }
         return true;
     };
+
+    SiteIterator.prototype.toArray = function () {
+        var superchargers = [];
+        this.iterate(function(supercharger) {
+              superchargers.push(supercharger);
+        });
+        return superchargers;
+    };
+
 
 
     return SiteIterator;
