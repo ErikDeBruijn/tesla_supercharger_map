@@ -14,6 +14,7 @@ define(['util/Events'], function (Events) {
     // nav-dropdown-event-dist-unit
     // nav-dropdown-event-circles-on
     // nav-dropdown-event-circles-off
+    // nav-dropdown-way-back-event
     //
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -46,6 +47,9 @@ define(['util/Events'], function (Events) {
         }
         else if (eventDetail.actionName === "range-circles-all-on") {
             this.trigger("nav-dropdown-event-circles-on");
+        }
+        else if(eventDetail.actionName === "#way-back-menu-item") {
+            this.trigger("nav-dropdown-way-back-event");
         }
     };
 

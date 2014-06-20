@@ -63,6 +63,14 @@ define(
             this.navBarDropDown.on("nav-dropdown-event-circles-off", function () {
                 mapView.setAllRangeCircleVisibility(false);
             });
+
+            this.navBarDropDown.on("nav-dropdown-way-back-event", function () {
+                // TODO: turn of construction and permit supercharges.
+                // TODO: HIDE RANGE CONTROLS.
+                // TODO: HIDE ALL RANGE CIRCLES
+                // TODO: zoom?
+                mapView.wayBack();
+            });
         };
 
         /**
