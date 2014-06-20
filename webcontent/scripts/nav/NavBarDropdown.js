@@ -48,7 +48,7 @@ define(['util/Events'], function (Events) {
         else if (eventDetail.actionName === "range-circles-all-on") {
             this.trigger("nav-dropdown-event-circles-on");
         }
-        else if(eventDetail.actionName === "#way-back-menu-item") {
+        else if(eventDetail.actionName === "way-back-menu-item") {
             this.trigger("nav-dropdown-way-back-event");
         }
     };
