@@ -64,6 +64,19 @@ define(
                 mapView.setAllRangeCircleVisibility(false);
             });
 
+            this.navBarDropDown.on("nav-dropdown-toggle-range-control-event", function () {
+                controlView.toggleRangeControlVisibility();
+            });
+
+            this.navBarDropDown.on("nav-dropdown-toggle-status-control-event", function () {
+                controlView.toggleStatusControlVisibility();
+            });
+
+            this.navBarDropDown.on("nav-dropdown-toggle-rendering-control-event", function () {
+                controlView.toggleRenderingControlVisibility();
+            });
+
+
             this.navBarDropDown.on("nav-dropdown-way-back-event", function () {
                 // TODO: turn of construction and permit supercharges.
                 // TODO: HIDE RANGE CONTROLS.

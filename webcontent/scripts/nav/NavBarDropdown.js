@@ -32,14 +32,14 @@ define(['util/Events'], function (Events) {
         eventDetail.link.find(".glyphicon").toggleClass("glyphicon-check");
         eventDetail.link.find(".glyphicon").toggleClass("glyphicon-unchecked");
 
-        if (eventDetail.actionName === "range") {
-            this.handleRangeAction();
+        if (eventDetail.actionName === "range-menu-item") {
+            this.trigger("nav-dropdown-toggle-range-control-event");
         }
-        else if (eventDetail.actionName === "status") {
-            this.handleStatusAction();
+        else if (eventDetail.actionName === "status-menu-item") {
+            this.trigger("nav-dropdown-toggle-status-control-event");
         }
-        else if (eventDetail.actionName === "rendering") {
-            this.handleRenderingAction();
+        else if (eventDetail.actionName === "rendering-menu-item") {
+            this.trigger("nav-dropdown-toggle-rendering-control-event");
         }
         else if (eventDetail.actionName === "range-circles-all-off") {
             this.trigger("nav-dropdown-circles-off-event");
@@ -52,17 +52,6 @@ define(['util/Events'], function (Events) {
         }
     };
 
-    NavBarDropdown.prototype.handleRangeAction = function () {
-        $("#control-row-one").children().eq(0).toggle();
-    };
-
-    NavBarDropdown.prototype.handleStatusAction = function () {
-        $("#control-row-one").children().eq(1).toggle();
-    };
-
-    NavBarDropdown.prototype.handleRenderingAction = function () {
-        $("#control-row-rendering").toggle();
-    };
 
     return NavBarDropdown;
 

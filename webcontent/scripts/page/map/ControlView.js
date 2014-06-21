@@ -165,6 +165,22 @@ define(['page/map/Range', 'page/map/RangeInput', 'util/Units', 'lib/spectrum'], 
         this.trigger("control-event-zoom-location", locationText);
     };
 
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    ControlView.prototype.toggleRangeControlVisibility = function () {
+        $("#control-row-one").children().eq(0).toggle();
+    };
+
+    ControlView.prototype.toggleStatusControlVisibility = function () {
+        $("#control-row-one").children().eq(1).toggle();
+    };
+
+    ControlView.prototype.toggleRenderingControlVisibility = function () {
+        $("#control-row-rendering").toggle();
+    };
+
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // getters
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
