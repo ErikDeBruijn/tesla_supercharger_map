@@ -52,7 +52,7 @@ define(
             var mapView = this.mapView;
             var controlView = this.controlView;
 
-            this.navBarDropDown.on("nav-dropdown-event-circles-on", function () {
+            this.navBarDropDown.on("nav-dropdown-circles-on-event", function () {
                 if (controlView.controlState.range.getCurrent() === 0) {
                     controlView.getRangeSlider().setValue(50);
                     mapView.redraw(false);
@@ -60,7 +60,7 @@ define(
                 mapView.setAllRangeCircleVisibility(true);
             });
 
-            this.navBarDropDown.on("nav-dropdown-event-circles-off", function () {
+            this.navBarDropDown.on("nav-dropdown-circles-off-event", function () {
                 mapView.setAllRangeCircleVisibility(false);
             });
 

@@ -11,9 +11,8 @@ define(['util/Events'], function (Events) {
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // Events
     //
-    // nav-dropdown-event-dist-unit
-    // nav-dropdown-event-circles-on
-    // nav-dropdown-event-circles-off
+    // nav-dropdown-circles-on-event
+    // nav-dropdown-circles-off-event
     // nav-dropdown-way-back-event
     //
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -43,10 +42,10 @@ define(['util/Events'], function (Events) {
             this.handleRenderingAction();
         }
         else if (eventDetail.actionName === "range-circles-all-off") {
-            this.trigger("nav-dropdown-event-circles-off");
+            this.trigger("nav-dropdown-circles-off-event");
         }
         else if (eventDetail.actionName === "range-circles-all-on") {
-            this.trigger("nav-dropdown-event-circles-on");
+            this.trigger("nav-dropdown-circles-on-event");
         }
         else if(eventDetail.actionName === "way-back-menu-item") {
             this.trigger("nav-dropdown-way-back-event");
