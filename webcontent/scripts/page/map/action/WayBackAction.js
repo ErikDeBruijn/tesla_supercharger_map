@@ -1,5 +1,5 @@
-define(['site/SiteIterator', 'site/SiteSorting', 'site/SitePredicates'],
-    function (SiteIterator, SiteSorting, SitePredicates) {
+define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePredicates'],
+    function (EventBus, SiteIterator, SiteSorting, SitePredicates) {
 
         /**
          *
@@ -7,23 +7,11 @@ define(['site/SiteIterator', 'site/SiteSorting', 'site/SitePredicates'],
          */
         var WayBack = function (googleMap) {
             this.googleMap = googleMap;
-
-            $(".layout-header")
-                .append("<div style='height: 3em; background: black; width: 100%; vertical-align: middle'>" +
-                    "<div id='way-back-date' style='font-weight: bold; color: white; text-align: center; font-size: 2em'>" +
-                    "</div>" +
-                    "</div>"
-            );
-
             this.dateDiv = $("#way-back-date");
             this.lastInfoWindow = null;
             this.index = -1;
 
-            this.superchargers = new SiteIterator()
-                .withSort(SiteSorting.BY_OPENED_DATE)
-                .withPredicate(SitePredicates.IS_OPEN_AND_COUNTED)
-                .toArray();
-
+            EventBus.addEventListener("nav-dropdown-way-back-event", this.start, this);
         };
 
         var MONTH_NAMES = [ "January", "February", "March", "April", "May", "June",
@@ -32,7 +20,25 @@ define(['site/SiteIterator', 'site/SiteSorting', 'site/SitePredicates'],
         /**
          *
          */
-        WayBack.prototype.go = function () {
+        WayBack.prototype.start = function () {
+            // TODO: turn of construction and permit supercharges.
+            // TODO: HIDE RANGE CONTROLS.
+            // TODO: HIDE ALL RANGE CIRCLES
+            // TODO: zoom?
+
+
+            $(".layout-header")
+                .append("<div style='height: 3em; background: black; width: 100%; vertical-align: middle'>" +
+                    "<div id='way-back-date' style='font-weight: bold; color: white; text-align: center; font-size: 2em'>" +
+                    "</div>" +
+                    "</div>"
+            );
+
+            this.superchargers = new SiteIterator()
+                .withSort(SiteSorting.BY_OPENED_DATE)
+                .withPredicate(SitePredicates.IS_OPEN_AND_COUNTED)
+                .toArray();
+
             $.each(this.superchargers, function (index, site) {
                 site.marker.setVisible(false);
             });

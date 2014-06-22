@@ -1,4 +1,4 @@
-define(['util/Events'], function (Events) {
+define(['util/Events', 'util/EventBus'], function (Events, EventBus) {
 
     /**
      *
@@ -48,7 +48,7 @@ define(['util/Events'], function (Events) {
             this.trigger("nav-dropdown-circles-on-event");
         }
         else if(eventDetail.actionName === "way-back-menu-item") {
-            this.trigger("nav-dropdown-way-back-event");
+            EventBus.dispatch("nav-dropdown-way-back-event");
         }
     };
 

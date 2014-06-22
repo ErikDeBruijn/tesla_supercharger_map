@@ -1,11 +1,11 @@
 define(
     [
         'lib/bootstrap',
-        'page/map/SuperchargerCarousel',
+        'page/map/SuperchargerCarousel', 'page/map/action/WayBackAction',
         'nav/NavBarDropdown', 'page/map/Routing',
         'page/map/ControlState', 'page/map/MapView', 'page/map/ControlView', 'lib/jquery.doTimeout'
     ],
-    function (bootstrap, SuperchargerCarousel, NavBarDropDown, Routing, ControlState, MapView, ControlView) {
+    function (bootstrap, SuperchargerCarousel, WayBackAction, NavBarDropDown, Routing, ControlState, MapView, ControlView) {
 
         /**
          *
@@ -43,6 +43,8 @@ define(
             this.controlView = new ControlView(controlState);
             this.routing = new Routing(this.mapView.googleMap);
 
+            this.wayBackAction = new WayBackAction(this.mapView.googleMap);
+
             this.initMapViewListeners();
             this.initControlViewListeners();
             this.initNavBarListeners();
@@ -76,14 +78,6 @@ define(
                 controlView.toggleRenderingControlVisibility();
             });
 
-
-            this.navBarDropDown.on("nav-dropdown-way-back-event", function () {
-                // TODO: turn of construction and permit supercharges.
-                // TODO: HIDE RANGE CONTROLS.
-                // TODO: HIDE ALL RANGE CIRCLES
-                // TODO: zoom?
-                mapView.wayBack();
-            });
         };
 
         /**

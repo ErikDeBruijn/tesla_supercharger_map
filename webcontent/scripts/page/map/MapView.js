@@ -1,8 +1,8 @@
 define(
     ['util/Events', 'util/Objects', 'site/SiteIterator', 'site/SitePredicates', 'site/Sites',
         'page/map/MapViewContextMenu', 'page/map/InfoWindowRender',
-        'page/map/MarkerFactory', 'page/map/RoutingWaypoint', 'page/map/WayBack', 'util/QueryStrings'],
-    function (Events, Objects, SiteIterator, SitePredicates, Sites, MapViewContextMenu, InfoWindowRender, MarkerFactory, RoutingWaypoint, WayBack, QueryStrings) {
+        'page/map/MarkerFactory', 'page/map/RoutingWaypoint', 'util/QueryStrings'],
+    function (Events, Objects, SiteIterator, SitePredicates, Sites, MapViewContextMenu, InfoWindowRender, MarkerFactory, RoutingWaypoint, QueryStrings) {
 
 
         /**
@@ -290,11 +290,6 @@ define(
                     supercharger.circle.setVisible(isVisible);
                 }
             );
-        };
-
-        MapView.prototype.wayBack = function () {
-            var wayBack = new WayBack(this.googleMap);
-            wayBack.go();
         };
 
         return MapView;
