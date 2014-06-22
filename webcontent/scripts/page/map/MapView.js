@@ -14,10 +14,6 @@ define(
 
             this.initMap();
 
-            this.markerFactory = new MarkerFactory(this.googleMap, this.controlState);
-
-            this.redraw();
-
             // handle clicks to toggle supercharger circle
             jQuery(document).on('click', '.circle-toggle-trigger', jQuery.proxy(this.handleCircleToggle, this));
             // handle clicks to remove supercharger marker
@@ -97,6 +93,20 @@ define(
             };
 
             this.googleMap = new google.maps.Map(this.viewDiv.get(0), mapOptions);
+
+            this.markerFactory = new MarkerFactory(this.googleMap, this.controlState);
+
+            var rangeCircleOptions = this.buildRangeCircleOptions();
+            var mapView = this;
+
+            new SiteIterator().iterate(
+                function (supercharger) {
+                    supercharger.marker = mapView.markerFactory.createMarker(supercharger);
+                    rangeCircleOptions.center = supercharger.location;
+                    supercharger.circle = new google.maps.Circle(rangeCircleOptions);
+                }
+            );
+
         };
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -137,33 +147,6 @@ define(
                     supercharger.circle.setOptions(rangeCircleOptions);
                 }
             );
-        };
-
-
-        /**
-         *  DRAW MAKERS/CIRCLES
-         */
-        MapView.prototype.redraw = function () {
-
-            var rangeCircleOptions = this.buildRangeCircleOptions();
-            var mapView = this;
-
-            new SiteIterator().iterate(
-                function (supercharger) {
-                    if (Objects.isNullOrUndef(supercharger.marker)) {
-                        supercharger.marker = mapView.markerFactory.createMarker(supercharger);
-                    }
-
-                    rangeCircleOptions.center = supercharger.location;
-                    if (Objects.isNullOrUndef(supercharger.circle)) {
-                        supercharger.circle = new google.maps.Circle(rangeCircleOptions);
-                    }
-                    else {
-                        supercharger.circle.setOptions(rangeCircleOptions);
-                    }
-                }
-            );
-
         };
 
         MapView.prototype.shouldDraw = function (supercharger) {
