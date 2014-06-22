@@ -1,10 +1,8 @@
 define(
-    ['util/Events', 'util/Objects', 'site/SiteIterator', 'site/SitePredicates', 'site/Sites',
+    ['util/Events', 'util/EventBus', 'util/Objects', 'site/SiteIterator', 'site/SitePredicates', 'site/Sites',
         'page/map/MapViewContextMenu', 'page/map/InfoWindowRender', 'page/map/StatusModel',
         'page/map/MarkerFactory', 'page/map/RoutingWaypoint', 'util/QueryStrings'],
-    function (Events, Objects, SiteIterator, SitePredicates, Sites, MapViewContextMenu, InfoWindowRender, statusModel, MarkerFactory, RoutingWaypoint, QueryStrings) {
-
-        alert(" status model = " + JSON.stringify(statusModel));
+    function (Events, EventBus, Objects, SiteIterator, SitePredicates, Sites, MapViewContextMenu, InfoWindowRender, statusModel, MarkerFactory, RoutingWaypoint, QueryStrings) {
 
         /**
          * Constructor.
@@ -18,7 +16,7 @@ define(
 
             this.markerFactory = new MarkerFactory(this.googleMap, this.controlState);
 
-            this.redraw(true);
+            this.redraw();
 
             // handle clicks to toggle supercharger circle
             jQuery(document).on('click', '.circle-toggle-trigger', jQuery.proxy(this.handleCircleToggle, this));
@@ -36,6 +34,7 @@ define(
             this.contextMenu.on("context-menu-add-marker", jQuery.proxy(this.handleAddMarker, this));
             this.contextMenu.on("context-menu-add-to-route", jQuery.proxy(this.handleAddToRouteContextMenu, this));
 
+            EventBus.addEventListener("status-model-changed-event", this.handleStatusModelChange, this);
         };
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -104,42 +103,64 @@ define(
 // Drawing
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+        MapView.prototype.handleStatusModelChange = function (event) {
+            var mapView = this;
+            new SiteIterator()
+                .withPredicate(SitePredicates.NOT_USER_ADDED)
+                .iterate(function (supercharger) {
+                    var visible = mapView.shouldDraw(supercharger);
+                    supercharger.marker.setVisible(visible);
+                    supercharger.circle.setVisible(visible);
+                    if (Objects.isNotNullOrUndef(supercharger.marker.infoWindow)) {
+                        supercharger.marker.infoWindow.close();
+                        supercharger.marker.infoWindow = null;
+                    }
+                });
+        };
+
+        MapView.prototype.setAllRangeCircleVisibility = function (isVisible) {
+            new SiteIterator()
+                .withPredicate(SitePredicates.HAS_CIRCLE)
+                .iterate(
+                function (supercharger) {
+                    supercharger.circle.setVisible(isVisible);
+                }
+            );
+        };
+
+        MapView.prototype.redrawCircles = function () {
+            var rangeCircleOptions = this.buildRangeCircleOptions();
+
+            new SiteIterator().iterate(
+                function (supercharger) {
+                    rangeCircleOptions.center = supercharger.location;
+                    supercharger.circle.setOptions(rangeCircleOptions);
+                }
+            );
+        };
+
+
         /**
          *  DRAW MAKERS/CIRCLES
          */
-        MapView.prototype.redraw = function (drawMarkers) {
+        MapView.prototype.redraw = function () {
 
             var rangeCircleOptions = this.buildRangeCircleOptions();
             var mapView = this;
 
             new SiteIterator().iterate(
                 function (supercharger) {
-                    if (mapView.shouldDraw(supercharger)) {
-                        if (drawMarkers) {
-                            if (Objects.isNullOrUndef(supercharger.marker)) {
-                                supercharger.marker = mapView.markerFactory.createMarker(supercharger);
-                            }
-                        }
-
-                        rangeCircleOptions.center = supercharger.location;
-                        if (Objects.isNullOrUndef(supercharger.circle)) {
-                            supercharger.circle = new google.maps.Circle(rangeCircleOptions);
-                        }
-                        else {
-                            supercharger.circle.setOptions(rangeCircleOptions);
-                        }
-
-                    } else {
-                        if (Objects.isNotNullOrUndef(supercharger.circle)) {
-                            supercharger.circle.setMap(null);
-                            supercharger.circle = null;
-                        }
-                        if (Objects.isNotNullOrUndef(supercharger.marker)) {
-                            supercharger.marker.setMap(null);
-                            supercharger.marker = null;
-                        }
+                    if (Objects.isNullOrUndef(supercharger.marker)) {
+                        supercharger.marker = mapView.markerFactory.createMarker(supercharger);
                     }
 
+                    rangeCircleOptions.center = supercharger.location;
+                    if (Objects.isNullOrUndef(supercharger.circle)) {
+                        supercharger.circle = new google.maps.Circle(rangeCircleOptions);
+                    }
+                    else {
+                        supercharger.circle.setOptions(rangeCircleOptions);
+                    }
                 }
             );
 
@@ -262,7 +283,9 @@ define(
                 var markerName = markerNameInput.val();
                 var newCharger = Sites.addSupercharger(markerName, event.latLng);
                 newCharger.marker = mapView.markerFactory.createMarker(newCharger);
-                mapView.redraw(false);
+                var rangeCircleOptions = mapView.buildRangeCircleOptions();
+                rangeCircleOptions.center = newCharger.location;
+                newCharger.circle = new google.maps.Circle(rangeCircleOptions);
                 var showInfoWindowForNewMarker = new google.maps.event.trigger(newCharger.marker, 'click');
             });
 
@@ -277,20 +300,6 @@ define(
             });
 
             markerDialog.modal();
-        };
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// Other controls
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        MapView.prototype.setAllRangeCircleVisibility = function (isVisible) {
-            new SiteIterator()
-                .withPredicate(SitePredicates.HAS_CIRCLE)
-                .iterate(
-                function (supercharger) {
-                    supercharger.circle.setVisible(isVisible);
-                }
-            );
         };
 
         return MapView;

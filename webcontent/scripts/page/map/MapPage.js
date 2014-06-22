@@ -74,7 +74,7 @@ define(
             controlView.getRangeSlider().on("range-change-event", function (event, newRange) {
                 jQuery.doTimeout("rangeTimerId", 200, function () {
                     controlView.controlState.range.setCurrent(newRange);
-                    mapView.redraw(false);
+                    mapView.redrawCircles();
                 });
             });
 
@@ -83,7 +83,7 @@ define(
             controlView.getFillOpacitySlider().on("range-change-event", function (event, newFillOpacity) {
                 jQuery.doTimeout("fillOpacityTimerId", 400, function () {
                     controlView.controlState.fillOpacity = newFillOpacity;
-                    mapView.redraw(false);
+                    mapView.redrawCircles()
                 });
 
             });
@@ -92,7 +92,7 @@ define(
             //
             controlView.on("fill-color-change-event", function (event, controlState) {
                 mapView.setControlState(controlState);
-                mapView.redraw(false);
+                mapView.redrawCircles();
             });
 
             // Callback: fill-opacity change
@@ -100,7 +100,7 @@ define(
             controlView.getBorderOpacitySlider().on("range-change-event", function (event, newBorderOpacity) {
                 jQuery.doTimeout("borderOpacityTimerId", 400, function () {
                     controlView.controlState.borderOpacity = newBorderOpacity;
-                    mapView.redraw(false);
+                    mapView.redrawCircles();
                 });
             });
 
@@ -108,7 +108,7 @@ define(
             //
             controlView.on("border-color-change-event", function (event, controlState) {
                 mapView.setControlState(controlState);
-                mapView.redraw(false);
+                mapView.redrawCircles();
             });
 
             // Callback: zoom to location

@@ -16,7 +16,7 @@ define(['util/EventBus'], function (EventBus) {
     Action.prototype.circlesOn = function () {
         if (this.controlView.controlState.range.getCurrent() === 0) {
             this.controlView.getRangeSlider().setValue(50);
-            this.mapView.redraw(false);
+            this.mapView.redrawCircles();
         }
         this.mapView.setAllRangeCircleVisibility(true);
     };

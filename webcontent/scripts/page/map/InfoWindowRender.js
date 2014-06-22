@@ -27,6 +27,7 @@ define(['util/Objects', 'util/Units', 'util/UnitConversion', 'util/Events'], fun
         var windowOptions = { content: this.buildHtmlContent() };
         this.infoWindow = new google.maps.InfoWindow(windowOptions);
         this.infoWindow.open(this.marker.map, this.marker);
+        this.marker.infoWindow = this.infoWindow;
     };
 
     Renderer.prototype.toggleDetails = function () {
