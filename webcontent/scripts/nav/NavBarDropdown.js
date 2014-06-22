@@ -5,26 +5,8 @@ define(['util/Events', 'util/EventBus'], function (Events, EventBus) {
      * @constructor
      */
     var NavBarDropdown = function () {
-
+        EventBus.addEventListener("control-state-changed-event", this.handleControlStateChange, this);
     };
-
-    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    // Events
-    //
-    // nav-dropdown-circles-on-event
-    // nav-dropdown-circles-off-event
-    // nav-dropdown-way-back-event
-    //
-    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    NavBarDropdown.prototype.on = function (eventName, callback) {
-        $("#navbar-map-dropdown").on(eventName, callback);
-    };
-    NavBarDropdown.prototype.trigger = function (eventName, customData) {
-        $("#navbar-map-dropdown").trigger(eventName, customData);
-    };
-
-    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     NavBarDropdown.prototype.handleAction = function (event) {
         var eventDetail = Events.eventDetail(event);
@@ -33,13 +15,13 @@ define(['util/Events', 'util/EventBus'], function (Events, EventBus) {
         eventDetail.link.find(".glyphicon").toggleClass("glyphicon-unchecked");
 
         if (eventDetail.actionName === "range-menu-item") {
-            this.trigger("nav-dropdown-toggle-range-control-event");
+            EventBus.dispatch("nav-dropdown-toggle-range-control-event");
         }
         else if (eventDetail.actionName === "status-menu-item") {
-            this.trigger("nav-dropdown-toggle-status-control-event");
+            EventBus.dispatch("nav-dropdown-toggle-status-control-event");
         }
         else if (eventDetail.actionName === "rendering-menu-item") {
-            this.trigger("nav-dropdown-toggle-rendering-control-event");
+            EventBus.dispatch("nav-dropdown-toggle-render-control-event");
         }
         else if (eventDetail.actionName === "range-circles-all-off") {
             EventBus.dispatch("nav-dropdown-circles-off-event");
@@ -52,6 +34,9 @@ define(['util/Events', 'util/EventBus'], function (Events, EventBus) {
         }
     };
 
+    NavBarDropdown.prototype.handleControlStateChange = function () {
+
+    };
 
     return NavBarDropdown;
 

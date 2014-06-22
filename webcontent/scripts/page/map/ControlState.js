@@ -14,9 +14,14 @@ define(['page/map/Range', 'util/QueryStrings', 'util/Units'], function (Range, Q
         this.borderOpacity = 0.3;
         this.borderColor = "#181fe7";
 
+        /* status control state */
         this.showOpen = true;
         this.showConstruction = true;
         this.showPermit = true;
+
+        this.rangeControlVisible = true;
+        this.statusControlVisible = true;
+        this.renderControlVisible = false;
     };
 
     ControlState.prototype.initRange = function () {

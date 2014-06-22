@@ -1,11 +1,12 @@
 define(
     [
         'lib/bootstrap',
-        'page/map/SuperchargerCarousel', 'page/map/action/WayBackAction', 'page/map/action/ToggleRangeCirclesAction',
+        'page/map/SuperchargerCarousel',
+        'page/map/action/WayBackAction', 'page/map/action/ToggleRangeCirclesAction', 'page/map/action/ControlToggleAction',
         'nav/NavBarDropdown', 'page/map/Routing',
         'page/map/ControlState', 'page/map/MapView', 'page/map/ControlView', 'lib/jquery.doTimeout'
     ],
-    function (bootstrap, SuperchargerCarousel, WayBackAction, ToggleRangeCirclesAction, NavBarDropDown, Routing, ControlState, MapView, ControlView) {
+    function (bootstrap, SuperchargerCarousel, WayBackAction, ToggleRangeCirclesAction, ControlToggleAction, NavBarDropDown, Routing, ControlState, MapView, ControlView) {
 
         /**
          *
@@ -43,29 +44,12 @@ define(
             this.controlView = new ControlView(controlState);
             this.routing = new Routing(this.mapView.googleMap);
 
-            this.wayBackAction = new WayBackAction(this.mapView.googleMap);
-            this.toggleRangeCirclesAction = new ToggleRangeCirclesAction(this.controlView, this.mapView);
+            this.action1 = new WayBackAction(this.mapView.googleMap);
+            this.action2 = new ToggleRangeCirclesAction(this.controlView, this.mapView);
+            this.action3 = new ControlToggleAction(this.controlView);
 
             this.initMapViewListeners();
             this.initControlViewListeners();
-            this.initNavBarListeners();
-        };
-
-        MapPage.prototype.initNavBarListeners = function () {
-            var controlView = this.controlView;
-
-            this.navBarDropDown.on("nav-dropdown-toggle-range-control-event", function () {
-                controlView.toggleRangeControlVisibility();
-            });
-
-            this.navBarDropDown.on("nav-dropdown-toggle-status-control-event", function () {
-                controlView.toggleStatusControlVisibility();
-            });
-
-            this.navBarDropDown.on("nav-dropdown-toggle-rendering-control-event", function () {
-                controlView.toggleRenderingControlVisibility();
-            });
-
         };
 
         /**
