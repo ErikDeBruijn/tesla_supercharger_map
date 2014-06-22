@@ -1,4 +1,4 @@
-define(['page/map/Range', 'page/map/RangeInput', 'util/EventBus', 'util/Units', 'page/map/StatusControlView', 'lib/spectrum'], function (Range, RangeInput, EventBus, Units, StatusControlView) {
+define(['page/map/Range', 'page/map/RangeInput', 'util/EventBus', 'util/Units', 'page/map/StatusControlView', 'page/map/RangeControlView', 'lib/spectrum'], function (Range, RangeInput, EventBus, Units, StatusControlView, RangeControlView) {
 
 
     /**
@@ -39,30 +39,10 @@ define(['page/map/Range', 'page/map/RangeInput', 'util/EventBus', 'util/Units', 
      */
     ControlView.prototype.initializeControls = function () {
         this.initZoomToLocationInput();
-        this.initRangeControl();
         new StatusControlView();
-        this.initRangeUnitControls();
+        new RangeControlView();
         this.initColorSliders();
         this.initColorInputs();
-    };
-
-    ControlView.prototype.initRangeUnitControls = function () {
-        var control = this;
-        var miUnitLabel = $("#range-unit-mi-label");
-        var kmUnitLabel = $("#range-unit-km-label");
-        miUnitLabel.click(function () {
-            control.handleDistanceUnit(Units.MI);
-        });
-        kmUnitLabel.click(function () {
-            control.handleDistanceUnit(Units.KM);
-        });
-        if (this.controlState.range.getDisplayUnit().isMiles()) {
-            miUnitLabel.addClass("active");
-            kmUnitLabel.removeClass("active");
-        } else {
-            miUnitLabel.removeClass("active");
-            kmUnitLabel.addClass("active");
-        }
     };
 
     ControlView.prototype.initColorSliders = function () {
@@ -93,16 +73,6 @@ define(['page/map/Range', 'page/map/RangeInput', 'util/EventBus', 'util/Units', 
         });
     };
 
-    /**
-     * Initialize range control.
-     */
-    ControlView.prototype.initRangeControl = function () {
-        this.rangeSlider = new RangeInput("#range-slider", "#range-number-text",
-            this.controlState.range.getMin(),
-            this.controlState.range.getMax(),
-            5,
-            this.controlState.range.getCurrent());
-    };
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Handlers for various UI component changes
@@ -122,14 +92,6 @@ define(['page/map/Range', 'page/map/RangeInput', 'util/EventBus', 'util/Units', 
     ControlView.prototype.handleBorderColorChange = function (newColor) {
         this.controlState.borderColor = "" + newColor;
         this.trigger("border-color-change-event", this.controlState);
-    };
-
-    /**
-     * Handle changes to distance unit.
-     */
-    ControlView.prototype.handleDistanceUnit = function (newUnit) {
-        this.controlState.range.setUnit(newUnit);
-        this.initRangeControl();
     };
 
     /**

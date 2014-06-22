@@ -1,8 +1,8 @@
 define(
     ['util/Events', 'util/EventBus', 'util/Objects', 'site/SiteIterator', 'site/SitePredicates', 'site/Sites',
-        'page/map/MapViewContextMenu', 'page/map/InfoWindowRender', 'page/map/StatusModel',
+        'page/map/MapViewContextMenu', 'page/map/InfoWindowRender', 'page/map/StatusModel', 'page/map/RangeModel',
         'page/map/MarkerFactory', 'page/map/RoutingWaypoint', 'util/QueryStrings'],
-    function (Events, EventBus, Objects, SiteIterator, SitePredicates, Sites, MapViewContextMenu, InfoWindowRender, statusModel, MarkerFactory, RoutingWaypoint, QueryStrings) {
+    function (Events, EventBus, Objects, SiteIterator, SitePredicates, Sites, MapViewContextMenu, InfoWindowRender, statusModel, rangeModel, MarkerFactory, RoutingWaypoint, QueryStrings) {
 
         /**
          * Constructor.
@@ -31,6 +31,7 @@ define(
             this.contextMenu.on("context-menu-add-to-route", jQuery.proxy(this.handleAddToRouteContextMenu, this));
 
             EventBus.addEventListener("status-model-changed-event", this.handleStatusModelChange, this);
+            EventBus.addEventListener("range-model-changed-event", this.redrawCircles, this);
         };
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -166,7 +167,7 @@ define(
                 fillColor: this.controlState.fillColor,
                 fillOpacity: this.controlState.fillOpacity,
                 map: this.googleMap,
-                radius: this.controlState.range.getRangeMeters(),
+                radius: rangeModel.range.getRangeMeters(),
                 clickable: false
             };
         };

@@ -1,13 +1,12 @@
-define(['util/Objects', 'util/Units', 'util/UnitConversion', 'util/Events'], function (Objects, Units, UnitConversion, Events) {
+define(['util/Objects', 'util/Units', 'util/UnitConversion', 'util/Events', 'page/map/RangeModel'], function (Objects, Units, UnitConversion, Events, rangeModel) {
 
     /**
      *
      * @constructor
      */
-    var Renderer = function (markerP, superchargerP, controlStateP) {
+    var Renderer = function (markerP, superchargerP) {
         this.marker = markerP;
         this.supercharger = superchargerP;
-        this.controlState = controlStateP;
         this.infoWindow = null;
         this.showDetails = false;
 
@@ -55,7 +54,7 @@ define(['util/Objects', 'util/Units', 'util/UnitConversion', 'util/Events'], fun
         popupContent += this.supercharger.address.street + "<br/>";
 
         if (this.showDetails) {
-            popupContent += buildDetailsDiv(this.supercharger, this.controlState.range.getDisplayUnit());
+            popupContent += buildDetailsDiv(this.supercharger, rangeModel.range.getDisplayUnit());
         }
 
         popupContent += buildLinksDiv(this.supercharger);

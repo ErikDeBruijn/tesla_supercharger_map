@@ -1,11 +1,10 @@
-define(['util/EventBus'], function (EventBus) {
+define(['util/EventBus', 'page/map/RangeModel'], function (EventBus, rangeModel) {
 
     /**
      *
      * @constructor
      */
-    var Action = function (controlView, mapView) {
-        this.controlView = controlView;
+    var Action = function (mapView) {
         this.mapView = mapView;
 
         EventBus.addEventListener("circles-all-on-event", this.circlesOn, this);
@@ -14,9 +13,9 @@ define(['util/EventBus'], function (EventBus) {
     };
 
     Action.prototype.circlesOn = function () {
-        if (this.controlView.controlState.range.getCurrent() === 0) {
-            this.controlView.getRangeSlider().setValue(50);
-            this.mapView.redrawCircles();
+        if (rangeModel.range.getCurrent() === 0) {
+            rangeModel.range.setCurrent(50);
+            rangeModel.fireChangeEvent();
         }
         this.mapView.setAllRangeCircleVisibility(true);
     };

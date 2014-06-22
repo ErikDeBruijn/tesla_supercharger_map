@@ -45,7 +45,7 @@ define(
             this.routing = new Routing(this.mapView.googleMap);
 
             this.action1 = new WayBackAction(this.mapView.googleMap);
-            this.action2 = new ToggleRangeCirclesAction(this.controlView, this.mapView);
+            this.action2 = new ToggleRangeCirclesAction(this.mapView);
             this.action3 = new ControlToggleAction(controlState);
             this.action4 = new StatusSelectionAction(controlState);
 
@@ -69,23 +69,11 @@ define(
             var mapView = this.mapView;
             var controlView = this.controlView;
 
-            // Callback: range change
-            //
-            controlView.getRangeSlider().on("range-change-event", function (event, newRange) {
-                jQuery.doTimeout("rangeTimerId", 200, function () {
-                    controlView.controlState.range.setCurrent(newRange);
-                    mapView.redrawCircles();
-                });
-            });
-
             // Callback: fill-opacity change
             //
             controlView.getFillOpacitySlider().on("range-change-event", function (event, newFillOpacity) {
-                jQuery.doTimeout("fillOpacityTimerId", 400, function () {
-                    controlView.controlState.fillOpacity = newFillOpacity;
-                    mapView.redrawCircles()
-                });
-
+                controlView.controlState.fillOpacity = newFillOpacity;
+                mapView.redrawCircles();
             });
 
             // Callback: fill color change
@@ -98,10 +86,8 @@ define(
             // Callback: fill-opacity change
             //
             controlView.getBorderOpacitySlider().on("range-change-event", function (event, newBorderOpacity) {
-                jQuery.doTimeout("borderOpacityTimerId", 400, function () {
-                    controlView.controlState.borderOpacity = newBorderOpacity;
-                    mapView.redrawCircles();
-                });
+                controlView.controlState.borderOpacity = newBorderOpacity;
+                mapView.redrawCircles();
             });
 
             // Callback: fill color change

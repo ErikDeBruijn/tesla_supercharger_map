@@ -50,7 +50,10 @@ define([], function () {
     };
 
     RangeInput.prototype.notifyListeners = function (newValue) {
-        this.trigger("range-change-event", newValue);
+        var control = this;
+        jQuery.doTimeout("rangeTimerId", 200, function () {
+            control.trigger("range-change-event", newValue);
+        });
     };
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

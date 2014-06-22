@@ -32,9 +32,8 @@ define(['page/map/InfoWindowRender', 'lib/jquery.browser'], function (InfoWindow
 
         var marker = new google.maps.Marker(markerOptions);
 
-        var controlState = this.controlState;
         google.maps.event.addListener(marker, 'click', function () {
-            var infoWindowRenderer = new InfoWindowRender(marker, supercharger, controlState);
+            var infoWindowRenderer = new InfoWindowRender(marker, supercharger);
             infoWindowRenderer.showWindow();
         });
 
