@@ -42,12 +42,12 @@ define(['util/Events', 'util/EventBus'], function (Events, EventBus) {
             this.trigger("nav-dropdown-toggle-rendering-control-event");
         }
         else if (eventDetail.actionName === "range-circles-all-off") {
-            this.trigger("nav-dropdown-circles-off-event");
+            EventBus.dispatch("nav-dropdown-circles-off-event");
         }
         else if (eventDetail.actionName === "range-circles-all-on") {
-            this.trigger("nav-dropdown-circles-on-event");
+            EventBus.dispatch("nav-dropdown-circles-on-event");
         }
-        else if(eventDetail.actionName === "way-back-menu-item") {
+        else if (eventDetail.actionName === "way-back-menu-item") {
             EventBus.dispatch("nav-dropdown-way-back-event");
         }
     };

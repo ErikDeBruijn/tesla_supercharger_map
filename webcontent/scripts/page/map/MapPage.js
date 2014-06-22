@@ -1,11 +1,11 @@
 define(
     [
         'lib/bootstrap',
-        'page/map/SuperchargerCarousel', 'page/map/action/WayBackAction',
+        'page/map/SuperchargerCarousel', 'page/map/action/WayBackAction', 'page/map/action/ToggleRangeCirclesAction',
         'nav/NavBarDropdown', 'page/map/Routing',
         'page/map/ControlState', 'page/map/MapView', 'page/map/ControlView', 'lib/jquery.doTimeout'
     ],
-    function (bootstrap, SuperchargerCarousel, WayBackAction, NavBarDropDown, Routing, ControlState, MapView, ControlView) {
+    function (bootstrap, SuperchargerCarousel, WayBackAction, ToggleRangeCirclesAction, NavBarDropDown, Routing, ControlState, MapView, ControlView) {
 
         /**
          *
@@ -44,6 +44,7 @@ define(
             this.routing = new Routing(this.mapView.googleMap);
 
             this.wayBackAction = new WayBackAction(this.mapView.googleMap);
+            this.toggleRangeCirclesAction = new ToggleRangeCirclesAction(this.controlView, this.mapView);
 
             this.initMapViewListeners();
             this.initControlViewListeners();
@@ -51,20 +52,7 @@ define(
         };
 
         MapPage.prototype.initNavBarListeners = function () {
-            var mapView = this.mapView;
             var controlView = this.controlView;
-
-            this.navBarDropDown.on("nav-dropdown-circles-on-event", function () {
-                if (controlView.controlState.range.getCurrent() === 0) {
-                    controlView.getRangeSlider().setValue(50);
-                    mapView.redraw(false);
-                }
-                mapView.setAllRangeCircleVisibility(true);
-            });
-
-            this.navBarDropDown.on("nav-dropdown-circles-off-event", function () {
-                mapView.setAllRangeCircleVisibility(false);
-            });
 
             this.navBarDropDown.on("nav-dropdown-toggle-range-control-event", function () {
                 controlView.toggleRangeControlVisibility();
