@@ -16,22 +16,22 @@ define(['util/Events', 'util/EventBus'], function (Events, EventBus) {
         var eventDetail = Events.eventDetail(event);
 
         if (eventDetail.actionName === "range-menu-item") {
-            EventBus.dispatch("nav-dropdown-toggle-range-control-event");
+            EventBus.dispatch("toggle-range-control-event");
         }
         else if (eventDetail.actionName === "status-menu-item") {
-            EventBus.dispatch("nav-dropdown-toggle-status-control-event");
+            EventBus.dispatch("toggle-status-control-event");
         }
         else if (eventDetail.actionName === "rendering-menu-item") {
-            EventBus.dispatch("nav-dropdown-toggle-render-control-event");
+            EventBus.dispatch("toggle-render-control-event");
         }
         else if (eventDetail.actionName === "range-circles-all-off") {
-            EventBus.dispatch("nav-dropdown-circles-off-event");
+            EventBus.dispatch("circles-all-off-event");
         }
         else if (eventDetail.actionName === "range-circles-all-on") {
-            EventBus.dispatch("nav-dropdown-circles-on-event");
+            EventBus.dispatch("circles-all-on-event");
         }
         else if (eventDetail.actionName === "way-back-menu-item") {
-            EventBus.dispatch("nav-dropdown-way-back-event");
+            EventBus.dispatch("way-back-start-event");
         }
     };
 

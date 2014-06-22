@@ -11,7 +11,7 @@ define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePred
             this.lastInfoWindow = null;
             this.index = -1;
 
-            EventBus.addEventListener("nav-dropdown-way-back-event", this.start, this);
+            EventBus.addEventListener("way-back-start-event", this.start, this);
         };
 
         var MONTH_NAMES = [ "January", "February", "March", "April", "May", "June",

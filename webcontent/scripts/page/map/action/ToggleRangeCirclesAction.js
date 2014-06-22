@@ -8,8 +8,8 @@ define(['util/EventBus'], function (EventBus) {
         this.controlView = controlView;
         this.mapView = mapView;
 
-        EventBus.addEventListener("nav-dropdown-circles-on-event", this.circlesOn, this);
-        EventBus.addEventListener("nav-dropdown-circles-off-event", this.circlesOff, this);
+        EventBus.addEventListener("circles-all-on-event", this.circlesOn, this);
+        EventBus.addEventListener("circles-all-off-event", this.circlesOff, this);
 
     };
 
