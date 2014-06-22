@@ -118,7 +118,7 @@ define(
             new SiteIterator()
                 .withPredicate(SitePredicates.NOT_USER_ADDED)
                 .iterate(function (supercharger) {
-                    var visible = mapView.shouldDraw(supercharger);
+                    var visible = mapView.shouldBeVisible(supercharger);
                     supercharger.marker.setVisible(visible);
                     supercharger.circle.setVisible(visible);
                     if (Objects.isNotNullOrUndef(supercharger.marker.infoWindow)) {
@@ -151,7 +151,7 @@ define(
             );
         };
 
-        MapView.prototype.shouldDraw = function (supercharger) {
+        MapView.prototype.shouldBeVisible = function (supercharger) {
             return (supercharger.isOpen() && statusModel.showOpen) ||
                 (supercharger.isConstruction() && statusModel.showConstruction) ||
                 (supercharger.isPermit() && statusModel.showPermit) ||
