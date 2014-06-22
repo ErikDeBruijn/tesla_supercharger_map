@@ -5,14 +5,15 @@ define(['util/Events', 'util/EventBus'], function (Events, EventBus) {
      * @constructor
      */
     var NavBarDropdown = function () {
+        this.rangeControlMenuItem = $("#range-menu-item").find(".glyphicon");
+        this.statusControlMenuItem = $("#status-menu-item").find(".glyphicon");
+        this.renderControlMenuItem = $("#rendering-menu-item").find(".glyphicon");
+
         EventBus.addEventListener("control-state-changed-event", this.handleControlStateChange, this);
     };
 
     NavBarDropdown.prototype.handleAction = function (event) {
         var eventDetail = Events.eventDetail(event);
-
-        eventDetail.link.find(".glyphicon").toggleClass("glyphicon-check");
-        eventDetail.link.find(".glyphicon").toggleClass("glyphicon-unchecked");
 
         if (eventDetail.actionName === "range-menu-item") {
             EventBus.dispatch("nav-dropdown-toggle-range-control-event");
@@ -34,9 +35,24 @@ define(['util/Events', 'util/EventBus'], function (Events, EventBus) {
         }
     };
 
-    NavBarDropdown.prototype.handleControlStateChange = function () {
-
+    NavBarDropdown.prototype.handleControlStateChange = function (event) {
+        var controlState = event.target;
+        checkboxUpdate(this.rangeControlMenuItem, controlState.rangeControlVisible);
+        checkboxUpdate(this.statusControlMenuItem, controlState.statusControlVisible);
+        checkboxUpdate(this.renderControlMenuItem, controlState.renderControlVisible);
     };
+
+    function checkboxUpdate(menuItem, checked) {
+        if (checked && !menuItem.hasClass("glyphicon-check")) {
+            menuItem.addClass("glyphicon-check");
+            menuItem.removeClass("glyphicon-unchecked");
+        }
+        if (!checked && !menuItem.hasClass("glyphicon-unchecked")) {
+            menuItem.addClass("glyphicon-unchecked");
+            menuItem.removeClass("glyphicon-check");
+        }
+    }
+
 
     return NavBarDropdown;
 

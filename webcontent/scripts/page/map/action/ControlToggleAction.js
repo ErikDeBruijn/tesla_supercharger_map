@@ -4,8 +4,8 @@ define(['util/EventBus'], function (EventBus) {
      *
      * @constructor
      */
-    var Action = function (controlView) {
-        this.controlView = controlView;
+    var Action = function (controlSate) {
+        this.controlState = controlSate;
 
         EventBus.addEventListener("nav-dropdown-toggle-range-control-event", this.rangeToggle, this);
         EventBus.addEventListener("nav-dropdown-toggle-status-control-event", this.statusToggle, this);
@@ -13,13 +13,16 @@ define(['util/EventBus'], function (EventBus) {
     };
 
     Action.prototype.rangeToggle = function () {
-        this.controlView.toggleRangeControlVisibility();
+        this.controlState.toggleRangeControlVisible();
+        this.controlState.fireChangeEvent();
     };
     Action.prototype.statusToggle = function () {
-        this.controlView.toggleStatusControlVisibility();
+        this.controlState.toggleStatusControlVisible();
+        this.controlState.fireChangeEvent();
     };
     Action.prototype.renderToggle = function () {
-        this.controlView.toggleRenderingControlVisibility();
+        this.controlState.toggleRenderControlVisible();
+        this.controlState.fireChangeEvent();
     };
 
     return Action;

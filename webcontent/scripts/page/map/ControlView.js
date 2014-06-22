@@ -1,4 +1,4 @@
-define(['page/map/Range', 'page/map/RangeInput', 'util/Units', 'lib/spectrum'], function (Range, RangeInput, Units) {
+define(['page/map/Range', 'page/map/RangeInput', 'util/EventBus', 'util/Units', 'lib/spectrum'], function (Range, RangeInput, EventBus, Units) {
 
 
     /**
@@ -11,6 +11,8 @@ define(['page/map/Range', 'page/map/RangeInput', 'util/Units', 'lib/spectrum'], 
         this.viewDiv = $("#rendering-controls-table");
 
         this.initializeControls();
+
+        EventBus.addEventListener("control-state-changed-event", this.handleControlStateChange, this);
     };
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -169,16 +171,12 @@ define(['page/map/Range', 'page/map/RangeInput', 'util/Units', 'lib/spectrum'], 
     //
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    ControlView.prototype.toggleRangeControlVisibility = function () {
-        $("#control-row-one").children().eq(0).toggle();
-    };
-
-    ControlView.prototype.toggleStatusControlVisibility = function () {
-        $("#control-row-one").children().eq(1).toggle();
-    };
-
-    ControlView.prototype.toggleRenderingControlVisibility = function () {
-        $("#control-row-rendering").toggle();
+    ControlView.prototype.handleControlStateChange = function (event) {
+        var controlState = event.target;
+        var rowOneChildren = $("#control-row-one").children();
+        rowOneChildren.eq(0).toggle(controlState.rangeControlVisible);
+        rowOneChildren.eq(1).toggle(controlState.statusControlVisible);
+        $("#control-row-rendering").toggle(controlState.renderControlVisible);
     };
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

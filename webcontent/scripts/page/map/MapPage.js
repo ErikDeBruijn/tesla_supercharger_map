@@ -46,7 +46,7 @@ define(
 
             this.action1 = new WayBackAction(this.mapView.googleMap);
             this.action2 = new ToggleRangeCirclesAction(this.controlView, this.mapView);
-            this.action3 = new ControlToggleAction(this.controlView);
+            this.action3 = new ControlToggleAction(controlState);
 
             this.initMapViewListeners();
             this.initControlViewListeners();

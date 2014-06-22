@@ -1,4 +1,4 @@
-define(['page/map/Range', 'util/QueryStrings', 'util/Units'], function (Range, QueryStrings, Units) {
+define(['util/EventBus', 'page/map/Range', 'util/QueryStrings', 'util/Units'], function (EventBus, Range, QueryStrings, Units) {
 
     /**
      *
@@ -36,6 +36,35 @@ define(['page/map/Range', 'util/QueryStrings', 'util/Units'], function (Range, Q
             this.range = new Range(0, Units.MI);
         }
     };
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    ControlState.prototype.fireChangeEvent = function () {
+        EventBus.dispatch("control-state-changed-event", this); // not sure what second arg does here.
+    };
+
+    ControlState.prototype.toggleRangeControlVisible = function () {
+        this.setRangeControlVisible(!this.rangeControlVisible);
+    };
+    ControlState.prototype.toggleStatusControlVisible = function () {
+        this.setStatusControlVisible(!this.statusControlVisible);
+    };
+    ControlState.prototype.toggleRenderControlVisible = function () {
+        this.setRenderControlVisible(!this.renderControlVisible);
+    };
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    ControlState.prototype.setRangeControlVisible = function (visible) {
+        this.rangeControlVisible = visible;
+    };
+    ControlState.prototype.setStatusControlVisible = function (visible) {
+        this.statusControlVisible = visible;
+    };
+    ControlState.prototype.setRenderControlVisible = function (visible) {
+        this.renderControlVisible = visible;
+    };
+
 
     return ControlState;
 
