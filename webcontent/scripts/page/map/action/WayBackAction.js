@@ -7,7 +7,6 @@ define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePred
          */
         var WayBack = function (googleMap) {
             this.googleMap = googleMap;
-            this.dateDiv = $("#way-back-date");
             this.lastInfoWindow = null;
             this.index = -1;
 
@@ -22,7 +21,7 @@ define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePred
          */
         WayBack.prototype.start = function () {
             // TODO: turn of construction and permit supercharges.
-            // TODO: HIDE RANGE CONTROLS.
+            EventBus.dispatch("hide-all-control-event");
             // TODO: HIDE ALL RANGE CIRCLES
             // TODO: zoom?
 
@@ -33,6 +32,7 @@ define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePred
                     "</div>" +
                     "</div>"
             );
+            this.dateDiv = $("#way-back-date");
 
             this.superchargers = new SiteIterator()
                 .withSort(SiteSorting.BY_OPENED_DATE)
@@ -60,7 +60,7 @@ define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePred
 
         WayBack.prototype.showNextInfoWindow = function () {
             var supercharger = this.superchargers[this.index];
-            if (this.lastInfoWindow != null) {
+            if (this.lastInfoWindow !== null) {
                 this.lastInfoWindow.close();
             }
             var infoWindow = new google.maps.InfoWindow({

@@ -10,6 +10,7 @@ define(['util/EventBus'], function (EventBus) {
         EventBus.addEventListener("toggle-range-control-event", this.rangeToggle, this);
         EventBus.addEventListener("toggle-status-control-event", this.statusToggle, this);
         EventBus.addEventListener("toggle-render-control-event", this.renderToggle, this);
+        EventBus.addEventListener("hide-all-control-event", this.hideAll, this);
     };
 
     Action.prototype.rangeToggle = function () {
@@ -22,6 +23,12 @@ define(['util/EventBus'], function (EventBus) {
     };
     Action.prototype.renderToggle = function () {
         this.controlState.toggleRenderControlVisible();
+        this.controlState.fireChangeEvent();
+    };
+    Action.prototype.hideAll = function () {
+        this.controlState.setRangeControlVisible(false);
+        this.controlState.setStatusControlVisible(false);
+        this.controlState.setRenderControlVisible(false);
         this.controlState.fireChangeEvent();
     };
 
