@@ -1,27 +1,24 @@
-define(['util/EventBus', 'site/SiteStatus'], function (EventBus, SiteStatus) {
+define(['util/EventBus', 'site/SiteStatus', 'page/map/StatusModel'], function (EventBus, SiteStatus, statusModel) {
 
     /**
      *
      * @constructor
      */
     var Action = function (controlSate) {
-        this.controlState = controlSate;
-
         EventBus.addEventListener("status-selection-change-event", this.statusSelectionChange, this);
     };
 
     Action.prototype.statusSelectionChange = function (event, siteStatus) {
         if (siteStatus === SiteStatus.PERMIT) {
-            this.controlState.showPermit = !this.controlState.showPermit;
+            statusModel.togglePermit();
         }
         if (siteStatus === SiteStatus.CONSTRUCTION) {
-            this.controlState.showConstruction = !this.controlState.showConstruction;
+            statusModel.toggleConstruction();
         }
         if (siteStatus === SiteStatus.OPEN) {
-            this.controlState.showOpen = !this.controlState.showOpen;
+            statusModel.toggleOpen();
         }
-        this.controlState.fireChangeEvent();
-        //TODO: mapView.redraw(true);
+        statusModel.fireModelChangeEvent();
     };
 
     return Action;

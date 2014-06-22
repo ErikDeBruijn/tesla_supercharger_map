@@ -1,9 +1,10 @@
 define(
     ['util/Events', 'util/Objects', 'site/SiteIterator', 'site/SitePredicates', 'site/Sites',
-        'page/map/MapViewContextMenu', 'page/map/InfoWindowRender',
+        'page/map/MapViewContextMenu', 'page/map/InfoWindowRender', 'page/map/StatusModel',
         'page/map/MarkerFactory', 'page/map/RoutingWaypoint', 'util/QueryStrings'],
-    function (Events, Objects, SiteIterator, SitePredicates, Sites, MapViewContextMenu, InfoWindowRender, MarkerFactory, RoutingWaypoint, QueryStrings) {
+    function (Events, Objects, SiteIterator, SitePredicates, Sites, MapViewContextMenu, InfoWindowRender, statusModel, MarkerFactory, RoutingWaypoint, QueryStrings) {
 
+        alert(" status model = " + JSON.stringify(statusModel));
 
         /**
          * Constructor.
@@ -145,9 +146,9 @@ define(
         };
 
         MapView.prototype.shouldDraw = function (supercharger) {
-            return (supercharger.isOpen() && this.controlState.showOpen) ||
-                (supercharger.isConstruction() && this.controlState.showConstruction) ||
-                (supercharger.isPermit() && this.controlState.showPermit) ||
+            return (supercharger.isOpen() && statusModel.showOpen) ||
+                (supercharger.isConstruction() && statusModel.showConstruction) ||
+                (supercharger.isPermit() && statusModel.showPermit) ||
                 supercharger.isUserAdded();
         };
 
