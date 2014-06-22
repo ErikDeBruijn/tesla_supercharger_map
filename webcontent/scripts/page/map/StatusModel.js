@@ -35,6 +35,11 @@ define(['util/EventBus' ], function (EventBus, SiteStatus) {
         this.showOpen = show;
     };
 
+    StatusModel.prototype.setAllOff = function () {
+        this.setShowPermit(false);
+        this.setShowConstruction(false);
+        this.setShowOpen(false);
+    };
 
     return new StatusModel();
 

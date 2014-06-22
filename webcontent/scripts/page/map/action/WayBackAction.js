@@ -1,5 +1,5 @@
-define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePredicates'],
-    function (EventBus, SiteIterator, SiteSorting, SitePredicates) {
+define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePredicates', 'page/map/StatusModel'],
+    function (EventBus, SiteIterator, SiteSorting, SitePredicates, statusModel) {
 
         /**
          *
@@ -20,7 +20,8 @@ define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePred
          *
          */
         WayBack.prototype.start = function () {
-            // TODO: turn of construction and permit supercharges.
+            statusModel.setAllOff();
+            statusModel.fireModelChangeEvent();
             EventBus.dispatch("hide-all-control-event");
             // TODO: HIDE ALL RANGE CIRCLES
             // TODO: zoom?
