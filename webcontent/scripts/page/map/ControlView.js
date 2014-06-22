@@ -12,7 +12,7 @@ define(['page/map/Range', 'page/map/RangeInput', 'util/EventBus', 'util/Units', 
 
         this.initializeControls();
 
-        EventBus.addEventListener("control-state-changed-event", this.handleControlStateChange, this);
+        EventBus.addEventListener("control-model-changed-event", this.handleControlModelChange, this);
     };
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -145,12 +145,11 @@ define(['page/map/Range', 'page/map/RangeInput', 'util/EventBus', 'util/Units', 
     //
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    ControlView.prototype.handleControlStateChange = function (event) {
-        var controlState = event.target;
+    ControlView.prototype.handleControlModelChange = function (event, controlModel) {
         var rowOneChildren = $("#control-row-one").children();
-        rowOneChildren.eq(0).toggle(controlState.rangeControlVisible);
-        rowOneChildren.eq(1).toggle(controlState.statusControlVisible);
-        $("#control-row-rendering").toggle(controlState.renderControlVisible);
+        rowOneChildren.eq(0).toggle(controlModel.rangeControlVisible);
+        rowOneChildren.eq(1).toggle(controlModel.statusControlVisible);
+        $("#control-row-rendering").toggle(controlModel.renderControlVisible);
     };
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

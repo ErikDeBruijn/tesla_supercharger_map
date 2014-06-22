@@ -35,7 +35,7 @@ define(['util/EventBus', 'page/map/Range', 'util/QueryStrings', 'util/Units'], f
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     ControlState.prototype.fireChangeEvent = function () {
-        EventBus.dispatch("control-state-changed-event", this); // not sure what second arg does here.
+        EventBus.dispatch("control-model-changed-event", this);
     };
 
     ControlState.prototype.toggleRangeControlVisible = function () {

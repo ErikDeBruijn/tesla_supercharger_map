@@ -133,7 +133,9 @@ define(
                 .withPredicate(SitePredicates.HAS_CIRCLE)
                 .iterate(
                 function (supercharger) {
-                    supercharger.circle.setVisible(isVisible);
+                    if (supercharger.marker.visible) {
+                        supercharger.circle.setVisible(isVisible);
+                    }
                 }
             );
         };
