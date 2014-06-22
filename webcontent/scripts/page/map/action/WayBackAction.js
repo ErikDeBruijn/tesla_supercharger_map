@@ -23,9 +23,6 @@ define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePred
             statusModel.setAllOff();
             statusModel.fireModelChangeEvent();
             EventBus.dispatch("hide-all-control-event");
-            // TODO: HIDE ALL RANGE CIRCLES
-            // TODO: zoom?
-
 
             $(".layout-header")
                 .append("<div style='height: 3em; background: black; width: 100%; vertical-align: middle'>" +

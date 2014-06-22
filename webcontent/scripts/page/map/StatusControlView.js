@@ -17,13 +17,13 @@ define(['util/EventBus', 'site/SiteStatus'], function (EventBus, SiteStatus) {
     };
 
     Control.prototype.openClicked = function (event) {
-        EventBus.dispatch("status-selection-change-event", "", SiteStatus.OPEN);
+        EventBus.dispatch("status-selection-change-event", "target", SiteStatus.OPEN);
     };
     Control.prototype.constructionClicked = function (event) {
-        EventBus.dispatch("status-selection-change-event", "", SiteStatus.CONSTRUCTION);
+        EventBus.dispatch("status-selection-change-event", "target", SiteStatus.CONSTRUCTION);
     };
     Control.prototype.permitClicked = function (event) {
-        EventBus.dispatch("status-selection-change-event", "", SiteStatus.PERMIT);
+        EventBus.dispatch("status-selection-change-event", "target", SiteStatus.PERMIT);
     };
 
 

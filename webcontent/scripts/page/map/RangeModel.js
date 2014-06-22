@@ -21,7 +21,7 @@ define(['util/EventBus', 'util/Units', 'page/map/Range', 'util/QueryStrings'], f
     };
 
     RangeModel.prototype.fireChangeEvent = function () {
-        EventBus.dispatch("range-model-changed-event", this);
+        EventBus.dispatch("range-model-changed-event");
     };
 
 
