@@ -1,4 +1,4 @@
-define(['page/map/RangeInput', 'util/EventBus', 'page/map/StatusControlView', 'page/map/RangeControlView', 'lib/spectrum'], function (RangeInput, EventBus, StatusControlView, RangeControlView) {
+define(['page/map/RangeInput', 'util/EventBus', 'lib/spectrum'], function (RangeInput, EventBus) {
 
 
     /**
@@ -39,8 +39,6 @@ define(['page/map/RangeInput', 'util/EventBus', 'page/map/StatusControlView', 'p
      */
     ControlView.prototype.initializeControls = function () {
         this.initZoomToLocationInput();
-        new StatusControlView();
-        new RangeControlView();
         this.initColorSliders();
         this.initColorInputs();
     };

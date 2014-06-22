@@ -19,7 +19,7 @@ define(['util/EventBus'], function (EventBus) {
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     ControlState.prototype.fireChangeEvent = function () {
-        EventBus.dispatch("control-model-changed-event", this);
+        EventBus.dispatch("control-model-changed-event", "target", this);
     };
 
     ControlState.prototype.toggleRangeControlVisible = function () {

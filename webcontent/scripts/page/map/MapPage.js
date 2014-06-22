@@ -1,12 +1,15 @@
 define(
     [
         'lib/bootstrap',
-        'page/map/SuperchargerCarousel',
-        'page/map/action/WayBackAction', 'page/map/action/ToggleRangeCirclesAction', 'page/map/action/ControlToggleAction', 'page/map/action/StatusSelectionAction',
+        'page/map/SuperchargerCarousel', 'page/map/StatusControlView', 'page/map/RangeControlView',
+        'page/map/action/WayBackAction', 'page/map/action/ToggleRangeCirclesAction', 'page/map/action/ControlToggleAction',
+        'page/map/action/StatusSelectionAction',
         'nav/NavBarDropdown', 'page/map/Routing',
         'page/map/ControlState', 'page/map/MapView', 'page/map/ControlView', 'lib/jquery.doTimeout'
     ],
-    function (bootstrap, SuperchargerCarousel, WayBackAction, ToggleRangeCirclesAction, ControlToggleAction, StatusSelectionAction, NavBarDropDown, Routing, ControlState, MapView, ControlView) {
+    function (bootstrap, SuperchargerCarousel, StatusControlView, RangeControlView,
+              WayBackAction, ToggleRangeCirclesAction, ControlToggleAction, StatusSelectionAction,
+              NavBarDropDown, Routing, ControlState, MapView, ControlView) {
 
         /**
          *
@@ -42,6 +45,10 @@ define(
             this.superChargerCarousel = new SuperchargerCarousel();
             this.mapView = new MapView(controlState);
             this.controlView = new ControlView(controlState);
+
+            new StatusControlView();
+            new RangeControlView();
+
             this.routing = new Routing(this.mapView.googleMap);
 
             this.action1 = new WayBackAction(this.mapView.googleMap);
