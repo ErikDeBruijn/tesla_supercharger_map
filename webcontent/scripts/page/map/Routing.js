@@ -1,4 +1,4 @@
-define(['page/map/RoutingPanel', 'page/map/RoutingModel'], function (RoutingPanel, RoutingModel) {
+define(['util/EventBus', 'page/map/RoutingPanel', 'page/map/RoutingModel'], function (EventBus, RoutingPanel, routingModel) {
 
     /**
      *
@@ -8,8 +8,6 @@ define(['page/map/RoutingPanel', 'page/map/RoutingModel'], function (RoutingPane
         this.googleMap = googleMap;
         this.directionsService = new google.maps.DirectionsService();
         this.routingPanel = new RoutingPanel();
-        this.routingModel = RoutingModel.INSTANCE;
-        this.routingModel.on("model-changed", jQuery.proxy(this.handleModelChange, this));
 
         this.directionsRenderer = new google.maps.DirectionsRenderer({
             map: googleMap,
@@ -18,21 +16,23 @@ define(['page/map/RoutingPanel', 'page/map/RoutingModel'], function (RoutingPane
             suppressMarkers: true,
             draggable: true
         });
+
+        EventBus.addEventListener("route-model-changed-event", this.handleModelChange, this);
     };
 
     Routing.prototype.handleAddRouteEvent = function (event, routingWaypoint) {
         this.routingPanel.show();
-        this.routingModel.addWaypoint(routingWaypoint);
+        routingModel.addWaypoint(routingWaypoint);
     };
 
     Routing.prototype.handleModelChange = function () {
         this.routingPanel.clearDirections();
-        if (this.routingModel.size() > 1) {
+        if (routingModel.size() > 1) {
             this.directionsRenderer.setMap(this.googleMap);
             var directionsRequest = {
-                origin: this.routingModel.getFirstLatLng().latLng,
-                destination: this.routingModel.getLastLatLng().latLng,
-                waypoints: this.routingModel.getBetweenLatLngList(),
+                origin: routingModel.getFirstLatLng().latLng,
+                destination: routingModel.getLastLatLng().latLng,
+                waypoints: routingModel.getBetweenLatLngList(),
                 travelMode: google.maps.TravelMode.DRIVING
             };
             this.directionsService.route(directionsRequest, jQuery.proxy(this.handleRouteResponse, this));

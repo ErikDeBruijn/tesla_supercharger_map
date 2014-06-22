@@ -1,16 +1,15 @@
-define(['page/map/RoutingModel'], function (RoutingModel) {
+define(['util/EventBus', 'page/map/RoutingModel'], function (EventBus, routingModel) {
 
     /**
      * @constructor
      */
     var RoutingPanel = function () {
-        this.routingModel = RoutingModel.INSTANCE;
         this.directionPanel = $("#route-directions-panel");
         this.waypointsPanel = $("#route-waypoints-panel");
 
         $("#route-panel-close-trigger").click(jQuery.proxy(this.hide, this));
 
-        this.routingModel.on("model-changed", jQuery.proxy(this.updateWaypoints, this));
+        EventBus.addEventListener("route-model-changed-event", this.updateWaypoints, this)
     };
 
     RoutingPanel.prototype.clearDirections = function () {
@@ -42,7 +41,7 @@ define(['page/map/RoutingModel'], function (RoutingModel) {
     RoutingPanel.prototype.updateWaypoints = function () {
         var unorderedList = this.waypointsPanel.find("ul");
         unorderedList.html("");
-        $.each(this.routingModel.getWaypoints(), function (index, routingWaypoint) {
+        $.each(routingModel.getWaypoints(), function (index, routingWaypoint) {
             unorderedList.append(
                 "<li class='list-group-item'>" +
                     "<button type='button' class='close' data-index='" + index + "'>&times;</button>" +
@@ -57,7 +56,7 @@ define(['page/map/RoutingModel'], function (RoutingModel) {
 
     RoutingPanel.prototype.handleRemoveWaypoint = function () {
         var index = $(event.target).data('index');
-        this.routingModel.removeWaypoint(index);
+        routingModel.removeWaypoint(index);
     };
 
     RoutingPanel.prototype.getDirectionsPanel = function () {

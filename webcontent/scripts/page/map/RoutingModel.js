@@ -1,4 +1,4 @@
-define([], function () {
+define(['util/EventBus'], function (EventBus) {
 
     /**
      *
@@ -6,25 +6,11 @@ define([], function () {
      */
     var RoutingModel = function () {
         this.waypointList = [];
-        this.eventDiv = $("#route-waypoints-panel");
     };
 
-    RoutingModel.INSTANCE = new RoutingModel();
-
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    // events
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    RoutingModel.prototype.on = function (eventName, callback) {
-        this.eventDiv.on(eventName, callback);
+    RoutingModel.prototype.fireChangeEvent = function () {
+        EventBus.dispatch("route-model-changed-event");
     };
-    RoutingModel.prototype.trigger = function (eventName, customData) {
-        this.eventDiv.trigger(eventName, customData);
-    };
-
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    //
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     RoutingModel.prototype.getWaypoints = function () {
         return this.waypointList;
@@ -32,12 +18,12 @@ define([], function () {
 
     RoutingModel.prototype.addWaypoint = function (waypoint) {
         this.waypointList.push(waypoint);
-        this.trigger("model-changed");
+        this.fireChangeEvent();
     };
 
     RoutingModel.prototype.removeWaypoint = function (index) {
         this.waypointList.splice(index, 1);
-        this.trigger("model-changed");
+        this.fireChangeEvent();
     };
 
     RoutingModel.prototype.size = function (index) {
@@ -64,6 +50,6 @@ define([], function () {
         return wayPointLatLngList;
     };
 
-    return RoutingModel;
+    return new RoutingModel();
 
 });
