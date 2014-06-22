@@ -1,4 +1,4 @@
-define(['page/map/Range', 'page/map/RangeInput', 'util/EventBus', 'util/Units', 'page/map/StatusControlView', 'page/map/RangeControlView', 'lib/spectrum'], function (Range, RangeInput, EventBus, Units, StatusControlView, RangeControlView) {
+define(['page/map/RangeInput', 'util/EventBus', 'page/map/StatusControlView', 'page/map/RangeControlView', 'lib/spectrum'], function (RangeInput, EventBus, StatusControlView, RangeControlView) {
 
 
     /**
@@ -118,9 +118,6 @@ define(['page/map/Range', 'page/map/RangeInput', 'util/EventBus', 'util/Units', 
 // getters
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    ControlView.prototype.getRangeSlider = function () {
-        return this.rangeSlider;
-    };
     ControlView.prototype.getBorderOpacitySlider = function () {
         return this.borderOpacitySlider;
     };
