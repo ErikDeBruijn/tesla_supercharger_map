@@ -1,4 +1,4 @@
-define(['page/map/Range', 'page/map/RangeInput', 'util/EventBus', 'util/Units', 'lib/spectrum'], function (Range, RangeInput, EventBus, Units) {
+define(['page/map/Range', 'page/map/RangeInput', 'util/EventBus', 'util/Units', 'page/map/StatusControlView', 'lib/spectrum'], function (Range, RangeInput, EventBus, Units, StatusControlView) {
 
 
     /**
@@ -40,7 +40,7 @@ define(['page/map/Range', 'page/map/RangeInput', 'util/EventBus', 'util/Units', 
     ControlView.prototype.initializeControls = function () {
         this.initZoomToLocationInput();
         this.initRangeControl();
-        this.initStatusCheckboxes();
+        new StatusControlView();
         this.initRangeUnitControls();
         this.initColorSliders();
         this.initColorInputs();
@@ -90,32 +90,6 @@ define(['page/map/Range', 'page/map/RangeInput', 'util/EventBus', 'util/Units', 
                 event.preventDefault();
                 controlView.handleZoomToLocation(event);
             }
-        });
-    };
-
-    ControlView.prototype.initStatusCheckboxes = function () {
-
-        function toggleCheckbox(enclosingDiv, newCheckState) {
-            var imageSpan = enclosingDiv.find(".glyphicon");
-            imageSpan.toggleClass("glyphicon-unchecked", !newCheckState);
-            imageSpan.toggleClass("glyphicon-check", newCheckState);
-        }
-
-        var controlView = this;
-        $("#status-completed-check").click(function (event) {
-            controlView.controlState.showOpen = !controlView.controlState.showOpen;
-            toggleCheckbox($(this), controlView.controlState.showOpen);
-            controlView.trigger("station-status-change-event", controlView.controlState);
-        });
-        $("#status-construction-check").click(function (event) {
-            controlView.controlState.showConstruction = !controlView.controlState.showConstruction;
-            toggleCheckbox($(this), controlView.controlState.showConstruction);
-            controlView.trigger("station-status-change-event", controlView.controlState);
-        });
-        $("#status-permit-check").click(function (event) {
-            controlView.controlState.showPermit = !controlView.controlState.showPermit;
-            toggleCheckbox($(this), controlView.controlState.showPermit);
-            controlView.trigger("station-status-change-event", controlView.controlState);
         });
     };
 

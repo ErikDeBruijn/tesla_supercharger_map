@@ -2,11 +2,11 @@ define(
     [
         'lib/bootstrap',
         'page/map/SuperchargerCarousel',
-        'page/map/action/WayBackAction', 'page/map/action/ToggleRangeCirclesAction', 'page/map/action/ControlToggleAction',
+        'page/map/action/WayBackAction', 'page/map/action/ToggleRangeCirclesAction', 'page/map/action/ControlToggleAction', 'page/map/action/StatusSelectionAction',
         'nav/NavBarDropdown', 'page/map/Routing',
         'page/map/ControlState', 'page/map/MapView', 'page/map/ControlView', 'lib/jquery.doTimeout'
     ],
-    function (bootstrap, SuperchargerCarousel, WayBackAction, ToggleRangeCirclesAction, ControlToggleAction, NavBarDropDown, Routing, ControlState, MapView, ControlView) {
+    function (bootstrap, SuperchargerCarousel, WayBackAction, ToggleRangeCirclesAction, ControlToggleAction, StatusSelectionAction, NavBarDropDown, Routing, ControlState, MapView, ControlView) {
 
         /**
          *
@@ -47,6 +47,7 @@ define(
             this.action1 = new WayBackAction(this.mapView.googleMap);
             this.action2 = new ToggleRangeCirclesAction(this.controlView, this.mapView);
             this.action3 = new ControlToggleAction(controlState);
+            this.action4 = new StatusSelectionAction(controlState);
 
             this.initMapViewListeners();
             this.initControlViewListeners();
@@ -108,13 +109,6 @@ define(
             controlView.on("border-color-change-event", function (event, controlState) {
                 mapView.setControlState(controlState);
                 mapView.redraw(false);
-            });
-
-            // Callback: station status change
-            //
-            controlView.on("station-status-change-event", function (event, controlState) {
-                mapView.setControlState(controlState);
-                mapView.redraw(true);
             });
 
             // Callback: zoom to location
