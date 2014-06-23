@@ -10,7 +10,8 @@ define(['page/map/RangeInput', 'util/EventBus', 'lib/spectrum'], function (Range
 
         this.viewDiv = $("#rendering-controls-table");
 
-        this.initializeControls();
+        this.initColorSliders();
+        this.initColorInputs();
 
         EventBus.addEventListener("control-model-changed-event", this.handleControlModelChange, this);
     };
@@ -34,15 +35,6 @@ define(['page/map/RangeInput', 'util/EventBus', 'lib/spectrum'], function (Range
 // Initialization
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    /**
-     * Initialize controls
-     */
-    ControlView.prototype.initializeControls = function () {
-        this.initZoomToLocationInput();
-        this.initColorSliders();
-        this.initColorInputs();
-    };
-
     ControlView.prototype.initColorSliders = function () {
         this.fillOpacitySlider = new RangeInput("#fill-opacity-slider", "#fill-opacity-number-text", 0.0, 1.0, 0.1, this.controlState.fillOpacity);
         this.borderOpacitySlider = new RangeInput("#border-opacity-slider", "#border-opacity-number-text", 0.0, 1.0, 0.1, this.controlState.borderOpacity);
@@ -60,16 +52,6 @@ define(['page/map/RangeInput', 'util/EventBus', 'lib/spectrum'], function (Range
         });
     };
 
-    ControlView.prototype.initZoomToLocationInput = function () {
-        var controlView = this;
-        $("#zoom-to-location-button").click(jQuery.proxy(this.handleZoomToLocation, this));
-        $("#zoom-to-location-input").on('keypress', function (event) {
-            if (event.keyCode === 13) {
-                event.preventDefault();
-                controlView.handleZoomToLocation(event);
-            }
-        });
-    };
 
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -90,15 +72,6 @@ define(['page/map/RangeInput', 'util/EventBus', 'lib/spectrum'], function (Range
     ControlView.prototype.handleBorderColorChange = function (newColor) {
         this.controlState.borderColor = "" + newColor;
         this.trigger("border-color-change-event", this.controlState);
-    };
-
-    /**
-     * Handle zoom to location.
-     */
-    ControlView.prototype.handleZoomToLocation = function (event) {
-        event.preventDefault();
-        var locationText = $("#zoom-to-location-input").val();
-        this.trigger("control-event-zoom-location", locationText);
     };
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

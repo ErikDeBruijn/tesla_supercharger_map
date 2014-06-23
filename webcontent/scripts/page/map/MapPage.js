@@ -3,13 +3,13 @@ define(
         'lib/bootstrap',
         'page/map/SuperchargerCarousel', 'page/map/StatusControlView', 'page/map/RangeControlView',
         'page/map/action/WayBackAction', 'page/map/action/ToggleRangeCirclesAction', 'page/map/action/ControlToggleAction',
-        'page/map/action/StatusSelectionAction',
+        'page/map/action/StatusSelectionAction', 'page/map/action/ZoomToLocationAction',
         'nav/NavBarDropdown', 'page/map/Routing',
-        'page/map/ControlState', 'page/map/MapView', 'page/map/ControlView', 'lib/jquery.doTimeout'
+        'page/map/ControlState', 'page/map/MapView', 'page/map/ControlView','page/map/ZoomView', 'lib/jquery.doTimeout'
     ],
     function (bootstrap, SuperchargerCarousel, StatusControlView, RangeControlView,
-              WayBackAction, ToggleRangeCirclesAction, ControlToggleAction, StatusSelectionAction,
-              NavBarDropDown, Routing, ControlState, MapView, ControlView) {
+              WayBackAction, ToggleRangeCirclesAction, ControlToggleAction, StatusSelectionAction, ZoomToLocationAction,
+              NavBarDropDown, Routing, ControlState, MapView, ControlView, ZoomView) {
 
         /**
          *
@@ -48,6 +48,7 @@ define(
 
             new StatusControlView();
             new RangeControlView();
+            new ZoomView();
 
             this.routing = new Routing(this.mapView.googleMap);
 
@@ -55,6 +56,7 @@ define(
             this.action2 = new ToggleRangeCirclesAction(this.mapView);
             this.action3 = new ControlToggleAction(controlState);
             this.action4 = new StatusSelectionAction(controlState);
+            this.action5 = new ZoomToLocationAction(this.mapView.googleMap);
 
             this.initMapViewListeners();
             this.initControlViewListeners();
@@ -102,12 +104,6 @@ define(
             controlView.on("border-color-change-event", function (event, controlState) {
                 mapView.setControlState(controlState);
                 mapView.redrawCircles();
-            });
-
-            // Callback: zoom to location
-            //
-            controlView.on("control-event-zoom-location", function (event, locationText) {
-                mapView.zoomToLocation(locationText);
             });
 
         };
