@@ -4,7 +4,7 @@ define(['util/EventBus', 'page/map/RoutingPanel', 'page/map/RoutingModel'], func
      *
      * @constructor
      */
-    var Routing = function (googleMap) {
+    var RoutingAction = function (googleMap) {
         this.googleMap = googleMap;
         this.directionsService = new google.maps.DirectionsService();
         this.routingPanel = new RoutingPanel();
@@ -21,12 +21,12 @@ define(['util/EventBus', 'page/map/RoutingPanel', 'page/map/RoutingModel'], func
         EventBus.addEventListener("route-added-event", this.handleAddRouteEvent, this);
     };
 
-    Routing.prototype.handleAddRouteEvent = function (event, routingWaypoint) {
+    RoutingAction.prototype.handleAddRouteEvent = function (event, routingWaypoint) {
         this.routingPanel.show();
         routingModel.addWaypoint(routingWaypoint);
     };
 
-    Routing.prototype.handleModelChange = function () {
+    RoutingAction.prototype.handleModelChange = function () {
         this.routingPanel.clearDirections();
         if (routingModel.size() > 1) {
             this.directionsRenderer.setMap(this.googleMap);
@@ -42,13 +42,13 @@ define(['util/EventBus', 'page/map/RoutingPanel', 'page/map/RoutingModel'], func
         }
     };
 
-    Routing.prototype.handleRouteResponse = function (response, status) {
+    RoutingAction.prototype.handleRouteResponse = function (response, status) {
         if (status === google.maps.DirectionsStatus.OK) {
             this.directionsRenderer.setDirections(response);
         }
     };
 
 
-    return Routing;
+    return RoutingAction;
 });
 
