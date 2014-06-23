@@ -5,11 +5,11 @@ define(
         'page/map/action/WayBackAction', 'page/map/action/ToggleRangeCirclesAction', 'page/map/action/ControlToggleAction',
         'page/map/action/StatusSelectionAction', 'page/map/action/ZoomToLocationAction',
         'nav/NavBarDropdown', 'page/map/Routing',
-        'page/map/ControlState', 'page/map/MapView', 'page/map/ControlView','page/map/ZoomView', 'lib/jquery.doTimeout'
+        'page/map/MapView', 'page/map/ControlView','page/map/ZoomView', 'lib/jquery.doTimeout'
     ],
     function (bootstrap, SuperchargerCarousel, StatusControlView, RangeControlView,
               WayBackAction, ToggleRangeCirclesAction, ControlToggleAction, StatusSelectionAction, ZoomToLocationAction,
-              NavBarDropDown, Routing, controlState, MapView, ControlView, ZoomView) {
+              NavBarDropDown, Routing, MapView, ControlView, ZoomView) {
 
         /**
          *

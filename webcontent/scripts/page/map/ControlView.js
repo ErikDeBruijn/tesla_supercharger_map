@@ -1,4 +1,4 @@
-define(['util/EventBus', 'page/map/RangeInput', 'page/map/ControlState', 'lib/spectrum'], function (EventBus, RangeInput, controlState) {
+define(['util/EventBus', 'page/map/RangeInput', 'page/map/RenderModel', 'lib/spectrum'], function (EventBus, RangeInput, renderModel) {
 
 
     /**
@@ -17,30 +17,30 @@ define(['util/EventBus', 'page/map/RangeInput', 'page/map/ControlState', 'lib/sp
     ControlView.prototype.initOpacitySliders = function () {
 
         this.fillOpacitySlider = new RangeInput("#fill-opacity-slider", "#fill-opacity-number-text",
-            0.0, 1.0, 0.1, controlState.fillOpacity);
+            0.0, 1.0, 0.1, renderModel.fillOpacity);
 
         this.borderOpacitySlider = new RangeInput("#border-opacity-slider", "#border-opacity-number-text",
-            0.0, 1.0, 0.1, controlState.borderOpacity);
+            0.0, 1.0, 0.1, renderModel.borderOpacity);
 
         this.fillOpacitySlider.on("range-change-event", function (event, newOpacity) {
-            controlState.fillOpacity = newOpacity;
-            controlState.fireRenderModelChangeEvent();
+            renderModel.fillOpacity = newOpacity;
+            renderModel.fireRenderModelChangeEvent();
         });
         this.borderOpacitySlider.on("range-change-event", function (event, newOpacity) {
-            controlState.borderOpacity = newOpacity;
-            controlState.fireRenderModelChangeEvent();
+            renderModel.borderOpacity = newOpacity;
+            renderModel.fireRenderModelChangeEvent();
         });
 
     };
 
     ControlView.prototype.initColorInputs = function () {
         $("#fill-color-input").spectrum({
-            color: controlState.fillColor,
+            color: renderModel.fillColor,
             change: jQuery.proxy(this.handleFillColorChange, this)
         });
 
         $("#border-color-input").spectrum({
-            color: controlState.borderColor,
+            color: renderModel.borderColor,
             change: jQuery.proxy(this.handleBorderColorChange, this)
         });
     };
@@ -54,16 +54,16 @@ define(['util/EventBus', 'page/map/RangeInput', 'page/map/ControlState', 'lib/sp
      * Handle fill color change.
      */
     ControlView.prototype.handleFillColorChange = function (newColor) {
-        controlState.fillColor = "" + newColor;
-        controlState.fireRenderModelChangeEvent();
+        renderModel.fillColor = "" + newColor;
+        renderModel.fireRenderModelChangeEvent();
     };
 
     /**
      * Handle border color change.
      */
     ControlView.prototype.handleBorderColorChange = function (newColor) {
-        controlState.borderColor = "" + newColor;
-        controlState.fireRenderModelChangeEvent();
+        renderModel.borderColor = "" + newColor;
+        renderModel.fireRenderModelChangeEvent();
     };
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

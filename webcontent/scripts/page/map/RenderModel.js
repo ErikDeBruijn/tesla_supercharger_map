@@ -4,7 +4,7 @@ define(['util/EventBus'], function (EventBus) {
      *
      * @constructor
      */
-    var ControlState = function () {
+    var RenderModel = function () {
         this.fillOpacity = 0.15;
         this.fillColor = "#86c4ec";
 
@@ -12,10 +12,10 @@ define(['util/EventBus'], function (EventBus) {
         this.borderColor = "#181fe7";
     };
 
-    ControlState.prototype.fireRenderModelChangeEvent = function () {
+    RenderModel.prototype.fireRenderModelChangeEvent = function () {
         EventBus.dispatch("render-model-changed-event");
     };
 
-    return new ControlState();
+    return new RenderModel();
 
 });

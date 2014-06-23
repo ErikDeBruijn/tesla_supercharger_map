@@ -1,8 +1,8 @@
 define(
     ['util/Events', 'util/EventBus', 'util/Objects', 'site/SiteIterator', 'site/SitePredicates', 'site/Sites',
         'page/map/MapViewContextMenu', 'page/map/InfoWindowRender', 'page/map/StatusModel', 'page/map/RangeModel',
-        'page/map/MarkerFactory', 'page/map/RoutingWaypoint', 'page/map/ControlState', 'util/QueryStrings'],
-    function (Events, EventBus, Objects, SiteIterator, SitePredicates, Sites, MapViewContextMenu, InfoWindowRender, statusModel, rangeModel, MarkerFactory, RoutingWaypoint, controlState, QueryStrings) {
+        'page/map/MarkerFactory', 'page/map/RoutingWaypoint', 'page/map/RenderModel', 'util/QueryStrings'],
+    function (Events, EventBus, Objects, SiteIterator, SitePredicates, Sites, MapViewContextMenu, InfoWindowRender, statusModel, rangeModel, MarkerFactory, RoutingWaypoint, renderModel, QueryStrings) {
 
         /**
          * Constructor.
@@ -94,7 +94,7 @@ define(
 
             this.googleMap = new google.maps.Map(this.viewDiv.get(0), mapOptions);
 
-            this.markerFactory = new MarkerFactory(this.googleMap, controlState);
+            this.markerFactory = new MarkerFactory(this.googleMap);
 
             var rangeCircleOptions = this.buildRangeCircleOptions();
             var mapView = this;
@@ -160,11 +160,11 @@ define(
 
         MapView.prototype.buildRangeCircleOptions = function () {
             return {
-                strokeColor: controlState.borderColor,
-                strokeOpacity: controlState.borderOpacity,
+                strokeColor: renderModel.borderColor,
+                strokeOpacity: renderModel.borderOpacity,
                 strokeWeight: 1,
-                fillColor: controlState.fillColor,
-                fillOpacity: controlState.fillOpacity,
+                fillColor: renderModel.fillColor,
+                fillOpacity: renderModel.fillOpacity,
                 map: this.googleMap,
                 radius: rangeModel.range.getRangeMeters(),
                 clickable: false

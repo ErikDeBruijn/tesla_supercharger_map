@@ -4,9 +4,8 @@ define(['page/map/InfoWindowRender', 'lib/jquery.browser'], function (InfoWindow
      *
      * @constructor
      */
-    var MarkerFactory = function (googleMap, controlState) {
+    var MarkerFactory = function (googleMap) {
         this.googleMap = googleMap;
-        this.controlState = controlState;
     };
 
     /**
