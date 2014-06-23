@@ -4,7 +4,7 @@ define(['util/EventBus', 'page/map/RangeInput', 'page/map/RenderModel', 'lib/spe
     /**
      * Constructor.
      */
-    var ControlView = function () {
+    var RenderView = function () {
         this.initOpacitySliders();
         this.initColorInputs();
         EventBus.addEventListener("control-visible-model-changed-event", this.handleControlVisibilityChange, this);
@@ -14,7 +14,7 @@ define(['util/EventBus', 'page/map/RangeInput', 'page/map/RenderModel', 'lib/spe
 // Initialization
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    ControlView.prototype.initOpacitySliders = function () {
+    RenderView.prototype.initOpacitySliders = function () {
 
         this.fillOpacitySlider = new RangeInput("#fill-opacity-slider", "#fill-opacity-number-text",
             0.0, 1.0, 0.1, renderModel.fillOpacity);
@@ -33,7 +33,7 @@ define(['util/EventBus', 'page/map/RangeInput', 'page/map/RenderModel', 'lib/spe
 
     };
 
-    ControlView.prototype.initColorInputs = function () {
+    RenderView.prototype.initColorInputs = function () {
         $("#fill-color-input").spectrum({
             color: renderModel.fillColor,
             change: jQuery.proxy(this.handleFillColorChange, this)
@@ -53,7 +53,7 @@ define(['util/EventBus', 'page/map/RangeInput', 'page/map/RenderModel', 'lib/spe
     /**
      * Handle fill color change.
      */
-    ControlView.prototype.handleFillColorChange = function (newColor) {
+    RenderView.prototype.handleFillColorChange = function (newColor) {
         renderModel.fillColor = "" + newColor;
         renderModel.fireRenderModelChangeEvent();
     };
@@ -61,7 +61,7 @@ define(['util/EventBus', 'page/map/RangeInput', 'page/map/RenderModel', 'lib/spe
     /**
      * Handle border color change.
      */
-    ControlView.prototype.handleBorderColorChange = function (newColor) {
+    RenderView.prototype.handleBorderColorChange = function (newColor) {
         renderModel.borderColor = "" + newColor;
         renderModel.fireRenderModelChangeEvent();
     };
@@ -70,14 +70,14 @@ define(['util/EventBus', 'page/map/RangeInput', 'page/map/RenderModel', 'lib/spe
     //
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    ControlView.prototype.handleControlVisibilityChange = function (event, controlVisibilityModel) {
+    RenderView.prototype.handleControlVisibilityChange = function (event, controlVisibilityModel) {
         var rowOneChildren = $("#control-row-one").children();
         rowOneChildren.eq(0).toggle(controlVisibilityModel.rangeControlVisible);
         rowOneChildren.eq(1).toggle(controlVisibilityModel.statusControlVisible);
         $("#control-row-rendering").toggle(controlVisibilityModel.renderControlVisible);
     };
 
-    return ControlView;
+    return RenderView;
 
 });
 

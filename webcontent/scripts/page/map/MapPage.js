@@ -5,11 +5,11 @@ define(
         'page/map/action/WayBackAction', 'page/map/action/ToggleRangeCirclesAction', 'page/map/action/ControlToggleAction',
         'page/map/action/StatusSelectionAction', 'page/map/action/ZoomToLocationAction',
         'nav/NavBarDropdown', 'page/map/Routing',
-        'page/map/MapView', 'page/map/ControlView','page/map/ZoomView', 'lib/jquery.doTimeout'
+        'page/map/MapView', 'page/map/RenderView','page/map/ZoomView', 'lib/jquery.doTimeout'
     ],
     function (bootstrap, SuperchargerCarousel, StatusControlView, RangeControlView,
               WayBackAction, ToggleRangeCirclesAction, ControlToggleAction, StatusSelectionAction, ZoomToLocationAction,
-              NavBarDropDown, Routing, MapView, ControlView, ZoomView) {
+              NavBarDropDown, Routing, MapView, RenderView, ZoomView) {
 
         /**
          *
@@ -38,11 +38,11 @@ define(
         };
 
         MapPage.prototype.initialize = function () {
-            this.navBarDropDown = new NavBarDropDown();
+            new NavBarDropDown();
 
-            this.superChargerCarousel = new SuperchargerCarousel();
+            new SuperchargerCarousel();
             this.mapView = new MapView();
-            this.controlView = new ControlView();
+            new RenderView();
 
             new StatusControlView();
             new RangeControlView();
@@ -50,11 +50,11 @@ define(
 
             this.routing = new Routing(this.mapView.googleMap);
 
-            this.action1 = new WayBackAction(this.mapView.googleMap);
-            this.action2 = new ToggleRangeCirclesAction(this.mapView);
-            this.action3 = new ControlToggleAction();
-            this.action4 = new StatusSelectionAction();
-            this.action5 = new ZoomToLocationAction(this.mapView.googleMap);
+            new WayBackAction(this.mapView.googleMap);
+            new ToggleRangeCirclesAction(this.mapView);
+            new ControlToggleAction();
+            new StatusSelectionAction();
+            new ZoomToLocationAction(this.mapView.googleMap);
 
             this.initMapViewListeners();
         };
