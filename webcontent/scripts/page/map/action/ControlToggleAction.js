@@ -1,4 +1,4 @@
-define(['util/EventBus', 'page/map/ControlState'], function (EventBus, controlState) {
+define(['util/EventBus', 'page/map/ControlVisibleModel'], function (EventBus, controlVisibilityModel) {
 
     /**
      *
@@ -12,22 +12,22 @@ define(['util/EventBus', 'page/map/ControlState'], function (EventBus, controlSt
     };
 
     Action.prototype.rangeToggle = function () {
-        controlState.toggleRangeControlVisible();
-        controlState.fireChangeEvent();
+        controlVisibilityModel.toggleRangeControlVisible();
+        controlVisibilityModel.fireChangeEvent();
     };
     Action.prototype.statusToggle = function () {
-        controlState.toggleStatusControlVisible();
-        controlState.fireChangeEvent();
+        controlVisibilityModel.toggleStatusControlVisible();
+        controlVisibilityModel.fireChangeEvent();
     };
     Action.prototype.renderToggle = function () {
-        controlState.toggleRenderControlVisible();
-        controlState.fireChangeEvent();
+        controlVisibilityModel.toggleRenderControlVisible();
+        controlVisibilityModel.fireChangeEvent();
     };
     Action.prototype.hideAll = function () {
-        controlState.setRangeControlVisible(false);
-        controlState.setStatusControlVisible(false);
-        controlState.setRenderControlVisible(false);
-        controlState.fireChangeEvent();
+        controlVisibilityModel.setRangeControlVisible(false);
+        controlVisibilityModel.setStatusControlVisible(false);
+        controlVisibilityModel.setRenderControlVisible(false);
+        controlVisibilityModel.fireChangeEvent();
     };
 
     return Action;

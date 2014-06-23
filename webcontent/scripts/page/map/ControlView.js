@@ -7,7 +7,7 @@ define(['util/EventBus', 'page/map/RangeInput', 'page/map/ControlState', 'lib/sp
     var ControlView = function () {
         this.initOpacitySliders();
         this.initColorInputs();
-        EventBus.addEventListener("control-model-changed-event", this.handleControlModelChange, this);
+        EventBus.addEventListener("control-visible-model-changed-event", this.handleControlVisibilityChange, this);
     };
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -70,11 +70,11 @@ define(['util/EventBus', 'page/map/RangeInput', 'page/map/ControlState', 'lib/sp
     //
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    ControlView.prototype.handleControlModelChange = function (event, controlModel) {
+    ControlView.prototype.handleControlVisibilityChange = function (event, controlVisibilityModel) {
         var rowOneChildren = $("#control-row-one").children();
-        rowOneChildren.eq(0).toggle(controlModel.rangeControlVisible);
-        rowOneChildren.eq(1).toggle(controlModel.statusControlVisible);
-        $("#control-row-rendering").toggle(controlModel.renderControlVisible);
+        rowOneChildren.eq(0).toggle(controlVisibilityModel.rangeControlVisible);
+        rowOneChildren.eq(1).toggle(controlVisibilityModel.statusControlVisible);
+        $("#control-row-rendering").toggle(controlVisibilityModel.renderControlVisible);
     };
 
     return ControlView;

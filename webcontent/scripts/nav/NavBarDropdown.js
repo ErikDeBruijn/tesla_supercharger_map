@@ -9,7 +9,7 @@ define(['util/Events', 'util/EventBus'], function (Events, EventBus) {
         this.statusControlMenuItem = $("#status-menu-item").find(".glyphicon");
         this.renderControlMenuItem = $("#rendering-menu-item").find(".glyphicon");
 
-        EventBus.addEventListener("control-model-changed-event", this.handleControlModelChange, this);
+        EventBus.addEventListener("control-visible-model-changed-event", this.handleControlVisibilityChange, this);
     };
 
     NavBarDropdown.prototype.handleAction = function (event) {
@@ -35,10 +35,10 @@ define(['util/Events', 'util/EventBus'], function (Events, EventBus) {
         }
     };
 
-    NavBarDropdown.prototype.handleControlModelChange = function (event, controlModel) {
-        checkboxUpdate(this.rangeControlMenuItem, controlModel.rangeControlVisible);
-        checkboxUpdate(this.statusControlMenuItem, controlModel.statusControlVisible);
-        checkboxUpdate(this.renderControlMenuItem, controlModel.renderControlVisible);
+    NavBarDropdown.prototype.handleControlVisibilityChange = function (event, controlVisibilityModel) {
+        checkboxUpdate(this.rangeControlMenuItem, controlVisibilityModel.rangeControlVisible);
+        checkboxUpdate(this.statusControlMenuItem, controlVisibilityModel.statusControlVisible);
+        checkboxUpdate(this.renderControlMenuItem, controlVisibilityModel.renderControlVisible);
     };
 
     function checkboxUpdate(menuItem, checked) {
