@@ -38,12 +38,11 @@ define(
         };
 
         MapPage.prototype.initialize = function () {
-            new NavBarDropDown();
-
-            new SuperchargerCarousel();
             this.mapView = new MapView();
-            new RenderView();
 
+            new NavBarDropDown();
+            new SuperchargerCarousel();
+            new RenderView();
             new StatusControlView();
             new RangeControlView();
             new ZoomView();
