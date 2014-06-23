@@ -39,6 +39,10 @@ define(['util/EventBus', 'page/map/RoutingModel'], function (EventBus, routingMo
     };
 
     RoutingPanel.prototype.updateWaypoints = function () {
+
+        this.show();
+        this.clearDirections();
+
         var unorderedList = this.waypointsPanel.find("ul");
         unorderedList.html("");
         $.each(routingModel.getWaypoints(), function (index, routingWaypoint) {

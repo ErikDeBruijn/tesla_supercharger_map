@@ -5,11 +5,11 @@ define(
         'page/map/action/WayBackAction', 'page/map/action/ToggleRangeCirclesAction', 'page/map/action/ControlToggleAction',
         'page/map/action/StatusSelectionAction', 'page/map/action/ZoomToLocationAction',
         'nav/NavBarDropdown', 'page/map/action/RoutingAction',
-        'page/map/MapView', 'page/map/RenderView','page/map/ZoomView', 'lib/jquery.doTimeout'
+        'page/map/MapView', 'page/map/RenderView','page/map/ZoomView', 'page/map/RoutingPanel', 'lib/jquery.doTimeout'
     ],
     function (bootstrap, SuperchargerCarousel, StatusControlView, RangeControlView,
               WayBackAction, ToggleRangeCirclesAction, ControlToggleAction, StatusSelectionAction, ZoomToLocationAction,
-              NavBarDropDown, RoutingAction, MapView, RenderView, ZoomView) {
+              NavBarDropDown, RoutingAction, MapView, RenderView, ZoomView, RoutingPanel) {
 
         /**
          *
@@ -47,6 +47,7 @@ define(
             new StatusControlView();
             new RangeControlView();
             new ZoomView();
+            new RoutingPanel();
 
             new RoutingAction(this.mapView.googleMap);
             new WayBackAction(this.mapView.googleMap);

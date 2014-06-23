@@ -1,4 +1,4 @@
-define(['util/EventBus', 'page/map/RoutingPanel', 'page/map/RoutingModel'], function (EventBus, RoutingPanel, routingModel) {
+define(['util/EventBus', 'page/map/RoutingModel'], function (EventBus, routingModel) {
 
     /**
      *
@@ -7,11 +7,10 @@ define(['util/EventBus', 'page/map/RoutingPanel', 'page/map/RoutingModel'], func
     var RoutingAction = function (googleMap) {
         this.googleMap = googleMap;
         this.directionsService = new google.maps.DirectionsService();
-        this.routingPanel = new RoutingPanel();
 
         this.directionsRenderer = new google.maps.DirectionsRenderer({
             map: googleMap,
-            panel: this.routingPanel.getDirectionsPanel().get(0),
+            panel: $("#route-directions-panel").get(0),
             preserveViewport: true,
             suppressMarkers: true,
             draggable: true
@@ -22,12 +21,10 @@ define(['util/EventBus', 'page/map/RoutingPanel', 'page/map/RoutingModel'], func
     };
 
     RoutingAction.prototype.handleAddRouteEvent = function (event, routingWaypoint) {
-        this.routingPanel.show();
         routingModel.addWaypoint(routingWaypoint);
     };
 
     RoutingAction.prototype.handleModelChange = function () {
-        this.routingPanel.clearDirections();
         if (routingModel.size() > 1) {
             this.directionsRenderer.setMap(this.googleMap);
             var directionsRequest = {
