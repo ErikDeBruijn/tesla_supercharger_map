@@ -59,19 +59,6 @@ define(
         }
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// Event methods that delegate to jquery object for triggering/observing custom events.
-//
-// map-event-route-added          [{}]
-//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        MapView.prototype.on = function (eventName, callback) {
-            this.viewDiv.on(eventName, callback);
-        };
-        MapView.prototype.trigger = function (eventName, extraData) {
-            this.viewDiv.trigger(eventName, extraData);
-        };
-
-//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Initialization
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -201,7 +188,7 @@ define(
             var eventDetail = Events.eventDetail(event);
             var id = parseInt(eventDetail.actionName);
             var supercharger = Sites.getById(id);
-            this.trigger("map-event-route-added", new RoutingWaypoint(supercharger.location, supercharger.displayName));
+            EventBus.dispatch("route-added-event", "target", new RoutingWaypoint(supercharger.location, supercharger.displayName));
         };
 
         MapView.prototype.zoomToMarker = function (event) {
@@ -220,7 +207,7 @@ define(
 
 
         MapView.prototype.handleAddToRouteContextMenu = function (event) {
-            this.trigger("map-event-route-added", new RoutingWaypoint(event.latLng, "Custom Location"));
+            EventBus.dispatch("route-added-event", "target", new RoutingWaypoint(event.latLng, "Custom Location"));
         };
 
         /**

@@ -4,7 +4,7 @@ define(
         'page/map/SuperchargerCarousel', 'page/map/StatusControlView', 'page/map/RangeControlView',
         'page/map/action/WayBackAction', 'page/map/action/ToggleRangeCirclesAction', 'page/map/action/ControlToggleAction',
         'page/map/action/StatusSelectionAction', 'page/map/action/ZoomToLocationAction',
-        'nav/NavBarDropdown', 'page/map/Routing',
+        'nav/NavBarDropdown', 'page/map/action/Routing',
         'page/map/MapView', 'page/map/RenderView','page/map/ZoomView', 'lib/jquery.doTimeout'
     ],
     function (bootstrap, SuperchargerCarousel, StatusControlView, RangeControlView,
@@ -48,24 +48,13 @@ define(
             new RangeControlView();
             new ZoomView();
 
-            this.routing = new Routing(this.mapView.googleMap);
-
+            new Routing(this.mapView.googleMap);
             new WayBackAction(this.mapView.googleMap);
             new ToggleRangeCirclesAction(this.mapView);
             new ControlToggleAction();
             new StatusSelectionAction();
             new ZoomToLocationAction(this.mapView.googleMap);
-
-            this.initMapViewListeners();
-        };
-
-        /**
-         * INIT: MapView
-         */
-        MapPage.prototype.initMapViewListeners = function () {
-            this.mapView.on("map-event-route-added", jQuery.proxy(this.routing.handleAddRouteEvent, this.routing));
         };
 
         return MapPage;
-
     });

@@ -18,6 +18,7 @@ define(['util/EventBus', 'page/map/RoutingPanel', 'page/map/RoutingModel'], func
         });
 
         EventBus.addEventListener("route-model-changed-event", this.handleModelChange, this);
+        EventBus.addEventListener("route-added-event", this.handleAddRouteEvent, this);
     };
 
     Routing.prototype.handleAddRouteEvent = function (event, routingWaypoint) {
