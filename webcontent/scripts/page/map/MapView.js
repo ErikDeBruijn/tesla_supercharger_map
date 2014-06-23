@@ -1,15 +1,13 @@
 define(
     ['util/Events', 'util/EventBus', 'util/Objects', 'site/SiteIterator', 'site/SitePredicates', 'site/Sites',
         'page/map/MapViewContextMenu', 'page/map/InfoWindowRender', 'page/map/StatusModel', 'page/map/RangeModel',
-        'page/map/MarkerFactory', 'page/map/RoutingWaypoint', 'util/QueryStrings'],
-    function (Events, EventBus, Objects, SiteIterator, SitePredicates, Sites, MapViewContextMenu, InfoWindowRender, statusModel, rangeModel, MarkerFactory, RoutingWaypoint, QueryStrings) {
+        'page/map/MarkerFactory', 'page/map/RoutingWaypoint', 'page/map/ControlState', 'util/QueryStrings'],
+    function (Events, EventBus, Objects, SiteIterator, SitePredicates, Sites, MapViewContextMenu, InfoWindowRender, statusModel, rangeModel, MarkerFactory, RoutingWaypoint, controlState, QueryStrings) {
 
         /**
          * Constructor.
          */
-        var MapView = function (controlState) {
-
-            this.controlState = controlState;
+        var MapView = function () {
             this.viewDiv = $("#map-canvas");
 
             this.initMap();
@@ -32,6 +30,7 @@ define(
 
             EventBus.addEventListener("status-model-changed-event", this.handleStatusModelChange, this);
             EventBus.addEventListener("range-model-changed-event", this.redrawCircles, this);
+            EventBus.addEventListener("render-model-changed-event", this.redrawCircles, this);
         };
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -95,7 +94,7 @@ define(
 
             this.googleMap = new google.maps.Map(this.viewDiv.get(0), mapOptions);
 
-            this.markerFactory = new MarkerFactory(this.googleMap, this.controlState);
+            this.markerFactory = new MarkerFactory(this.googleMap, controlState);
 
             var rangeCircleOptions = this.buildRangeCircleOptions();
             var mapView = this;
@@ -161,23 +160,15 @@ define(
 
         MapView.prototype.buildRangeCircleOptions = function () {
             return {
-                strokeColor: this.controlState.borderColor,
-                strokeOpacity: this.controlState.borderOpacity,
+                strokeColor: controlState.borderColor,
+                strokeOpacity: controlState.borderOpacity,
                 strokeWeight: 1,
-                fillColor: this.controlState.fillColor,
-                fillOpacity: this.controlState.fillOpacity,
+                fillColor: controlState.fillColor,
+                fillOpacity: controlState.fillOpacity,
                 map: this.googleMap,
                 radius: rangeModel.range.getRangeMeters(),
                 clickable: false
             };
-        };
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// getters/setters
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        MapView.prototype.setControlState = function (controlState) {
-            this.controlState = controlState;
         };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

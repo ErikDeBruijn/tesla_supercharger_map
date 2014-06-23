@@ -4,7 +4,7 @@ define(['util/EventBus', 'site/SiteStatus', 'page/map/StatusModel'], function (E
      *
      * @constructor
      */
-    var Action = function (controlSate) {
+    var Action = function () {
         EventBus.addEventListener("status-selection-change-event", this.statusSelectionChange, this);
     };
 

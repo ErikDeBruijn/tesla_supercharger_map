@@ -16,10 +16,13 @@ define(['util/EventBus'], function (EventBus) {
         this.renderControlVisible = false;
     };
 
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     ControlState.prototype.fireChangeEvent = function () {
         EventBus.dispatch("control-model-changed-event", "target", this);
+    };
+
+    ControlState.prototype.fireRenderModelChangeEvent = function () {
+        EventBus.dispatch("render-model-changed-event");
     };
 
     ControlState.prototype.toggleRangeControlVisible = function () {
@@ -45,6 +48,6 @@ define(['util/EventBus'], function (EventBus) {
     };
 
 
-    return ControlState;
+    return new ControlState();
 
 });

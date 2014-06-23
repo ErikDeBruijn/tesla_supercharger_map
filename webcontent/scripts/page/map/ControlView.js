@@ -1,57 +1,49 @@
-define(['page/map/RangeInput', 'util/EventBus', 'lib/spectrum'], function (RangeInput, EventBus) {
+define(['util/EventBus', 'page/map/RangeInput', 'page/map/ControlState', 'lib/spectrum'], function (EventBus, RangeInput, controlState) {
 
 
     /**
      * Constructor.
      */
-    var ControlView = function (controlState) {
-
-        this.controlState = controlState;
-
-        this.viewDiv = $("#rendering-controls-table");
-
-        this.initColorSliders();
+    var ControlView = function () {
+        this.initOpacitySliders();
         this.initColorInputs();
-
         EventBus.addEventListener("control-model-changed-event", this.handleControlModelChange, this);
-    };
-
-//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// Event methods that delegate to jquery object for triggering/observing custom events.
-//
-// fill-color-event-change     [newFillColor]
-// border-color-event-change   [newBorderColor]
-// control-event-zoom-location [newLocation]
-//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    ControlView.prototype.on = function (eventName, callback) {
-        this.viewDiv.on(eventName, callback);
-    };
-    ControlView.prototype.trigger = function (eventName, customData) {
-        this.viewDiv.trigger(eventName, customData);
     };
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Initialization
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    ControlView.prototype.initColorSliders = function () {
-        this.fillOpacitySlider = new RangeInput("#fill-opacity-slider", "#fill-opacity-number-text", 0.0, 1.0, 0.1, this.controlState.fillOpacity);
-        this.borderOpacitySlider = new RangeInput("#border-opacity-slider", "#border-opacity-number-text", 0.0, 1.0, 0.1, this.controlState.borderOpacity);
+    ControlView.prototype.initOpacitySliders = function () {
+
+        this.fillOpacitySlider = new RangeInput("#fill-opacity-slider", "#fill-opacity-number-text",
+            0.0, 1.0, 0.1, controlState.fillOpacity);
+
+        this.borderOpacitySlider = new RangeInput("#border-opacity-slider", "#border-opacity-number-text",
+            0.0, 1.0, 0.1, controlState.borderOpacity);
+
+        this.fillOpacitySlider.on("range-change-event", function (event, newOpacity) {
+            controlState.fillOpacity = newOpacity;
+            controlState.fireRenderModelChangeEvent();
+        });
+        this.borderOpacitySlider.on("range-change-event", function (event, newOpacity) {
+            controlState.borderOpacity = newOpacity;
+            controlState.fireRenderModelChangeEvent();
+        });
+
     };
 
     ControlView.prototype.initColorInputs = function () {
         $("#fill-color-input").spectrum({
-            color: this.controlState.fillColor,
+            color: controlState.fillColor,
             change: jQuery.proxy(this.handleFillColorChange, this)
         });
 
         $("#border-color-input").spectrum({
-            color: this.controlState.borderColor,
+            color: controlState.borderColor,
             change: jQuery.proxy(this.handleBorderColorChange, this)
         });
     };
-
 
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -62,16 +54,16 @@ define(['page/map/RangeInput', 'util/EventBus', 'lib/spectrum'], function (Range
      * Handle fill color change.
      */
     ControlView.prototype.handleFillColorChange = function (newColor) {
-        this.controlState.fillColor = "" + newColor;
-        this.trigger("fill-color-change-event", this.controlState);
+        controlState.fillColor = "" + newColor;
+        controlState.fireRenderModelChangeEvent();
     };
 
     /**
      * Handle border color change.
      */
     ControlView.prototype.handleBorderColorChange = function (newColor) {
-        this.controlState.borderColor = "" + newColor;
-        this.trigger("border-color-change-event", this.controlState);
+        controlState.borderColor = "" + newColor;
+        controlState.fireRenderModelChangeEvent();
     };
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -83,17 +75,6 @@ define(['page/map/RangeInput', 'util/EventBus', 'lib/spectrum'], function (Range
         rowOneChildren.eq(0).toggle(controlModel.rangeControlVisible);
         rowOneChildren.eq(1).toggle(controlModel.statusControlVisible);
         $("#control-row-rendering").toggle(controlModel.renderControlVisible);
-    };
-
-//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-// getters
-//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    ControlView.prototype.getBorderOpacitySlider = function () {
-        return this.borderOpacitySlider;
-    };
-    ControlView.prototype.getFillOpacitySlider = function () {
-        return this.fillOpacitySlider;
     };
 
     return ControlView;

@@ -1,12 +1,10 @@
-define(['util/EventBus'], function (EventBus) {
+define(['util/EventBus', 'page/map/ControlState'], function (EventBus, controlState) {
 
     /**
      *
      * @constructor
      */
-    var Action = function (controlSate) {
-        this.controlState = controlSate;
-
+    var Action = function () {
         EventBus.addEventListener("toggle-range-control-event", this.rangeToggle, this);
         EventBus.addEventListener("toggle-status-control-event", this.statusToggle, this);
         EventBus.addEventListener("toggle-render-control-event", this.renderToggle, this);
@@ -14,22 +12,22 @@ define(['util/EventBus'], function (EventBus) {
     };
 
     Action.prototype.rangeToggle = function () {
-        this.controlState.toggleRangeControlVisible();
-        this.controlState.fireChangeEvent();
+        controlState.toggleRangeControlVisible();
+        controlState.fireChangeEvent();
     };
     Action.prototype.statusToggle = function () {
-        this.controlState.toggleStatusControlVisible();
-        this.controlState.fireChangeEvent();
+        controlState.toggleStatusControlVisible();
+        controlState.fireChangeEvent();
     };
     Action.prototype.renderToggle = function () {
-        this.controlState.toggleRenderControlVisible();
-        this.controlState.fireChangeEvent();
+        controlState.toggleRenderControlVisible();
+        controlState.fireChangeEvent();
     };
     Action.prototype.hideAll = function () {
-        this.controlState.setRangeControlVisible(false);
-        this.controlState.setStatusControlVisible(false);
-        this.controlState.setRenderControlVisible(false);
-        this.controlState.fireChangeEvent();
+        controlState.setRangeControlVisible(false);
+        controlState.setStatusControlVisible(false);
+        controlState.setRenderControlVisible(false);
+        controlState.fireChangeEvent();
     };
 
     return Action;

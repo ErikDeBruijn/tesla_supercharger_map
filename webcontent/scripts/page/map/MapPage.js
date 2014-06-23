@@ -9,7 +9,7 @@ define(
     ],
     function (bootstrap, SuperchargerCarousel, StatusControlView, RangeControlView,
               WayBackAction, ToggleRangeCirclesAction, ControlToggleAction, StatusSelectionAction, ZoomToLocationAction,
-              NavBarDropDown, Routing, ControlState, MapView, ControlView, ZoomView) {
+              NavBarDropDown, Routing, controlState, MapView, ControlView, ZoomView) {
 
         /**
          *
@@ -38,13 +38,11 @@ define(
         };
 
         MapPage.prototype.initialize = function () {
-            var controlState = new ControlState();
-
             this.navBarDropDown = new NavBarDropDown();
 
             this.superChargerCarousel = new SuperchargerCarousel();
-            this.mapView = new MapView(controlState);
-            this.controlView = new ControlView(controlState);
+            this.mapView = new MapView();
+            this.controlView = new ControlView();
 
             new StatusControlView();
             new RangeControlView();
@@ -54,12 +52,11 @@ define(
 
             this.action1 = new WayBackAction(this.mapView.googleMap);
             this.action2 = new ToggleRangeCirclesAction(this.mapView);
-            this.action3 = new ControlToggleAction(controlState);
-            this.action4 = new StatusSelectionAction(controlState);
+            this.action3 = new ControlToggleAction();
+            this.action4 = new StatusSelectionAction();
             this.action5 = new ZoomToLocationAction(this.mapView.googleMap);
 
             this.initMapViewListeners();
-            this.initControlViewListeners();
         };
 
         /**
@@ -67,45 +64,6 @@ define(
          */
         MapPage.prototype.initMapViewListeners = function () {
             this.mapView.on("map-event-route-added", jQuery.proxy(this.routing.handleAddRouteEvent, this.routing));
-        };
-
-
-        /**
-         * INIT: ControlView
-         */
-        MapPage.prototype.initControlViewListeners = function () {
-
-            var mapView = this.mapView;
-            var controlView = this.controlView;
-
-            // Callback: fill-opacity change
-            //
-            controlView.getFillOpacitySlider().on("range-change-event", function (event, newFillOpacity) {
-                controlView.controlState.fillOpacity = newFillOpacity;
-                mapView.redrawCircles();
-            });
-
-            // Callback: fill color change
-            //
-            controlView.on("fill-color-change-event", function (event, controlState) {
-                mapView.setControlState(controlState);
-                mapView.redrawCircles();
-            });
-
-            // Callback: fill-opacity change
-            //
-            controlView.getBorderOpacitySlider().on("range-change-event", function (event, newBorderOpacity) {
-                controlView.controlState.borderOpacity = newBorderOpacity;
-                mapView.redrawCircles();
-            });
-
-            // Callback: fill color change
-            //
-            controlView.on("border-color-change-event", function (event, controlState) {
-                mapView.setControlState(controlState);
-                mapView.redrawCircles();
-            });
-
         };
 
         return MapPage;
