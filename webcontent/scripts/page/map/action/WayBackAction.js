@@ -23,13 +23,7 @@ define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePred
             statusModel.setAllOff();
             statusModel.fireModelChangeEvent();
             EventBus.dispatch("hide-all-control-event");
-
-            $(".layout-header")
-                .append("<div style='height: 3em; background: black; width: 100%; vertical-align: middle'>" +
-                    "<div id='way-back-date' style='font-weight: bold; color: white; text-align: center; font-size: 2em'>" +
-                    "</div>" +
-                    "</div>"
-            );
+            $("#way-back-container").show();
             this.dateDiv = $("#way-back-date");
 
             this.superchargers = new SiteIterator()

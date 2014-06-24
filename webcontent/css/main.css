@@ -12,6 +12,7 @@
 @import "page/map/MapView.css";
 @import "page/map/Routing.css";
 @import "page/map/SuperchargerCarousel.css";
+@import "page/map/WayBack.css";
 /* - - - - - - - - - - - - - - - - - - - - PAGE: Data */
 @import "page/data/SuperChargerDataTable.css";
 /* - - - - - - - - - - - - - - - - - - - - PAGE: Changes*/
