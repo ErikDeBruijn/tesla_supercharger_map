@@ -74,7 +74,7 @@ define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePred
             if (this.index < this.superchargers.length - 1) {
                 this.showNextDate();
                 this.showNextInfoWindow();
-                setTimeout(jQuery.proxy(this.showNextMarker, this), 350);
+                this.showNextMarker();
                 setTimeout(jQuery.proxy(this.doNext, this), 1350);
             }
         };
