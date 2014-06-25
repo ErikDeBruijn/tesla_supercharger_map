@@ -67,6 +67,7 @@ define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePred
         WayBack.prototype.showNextInfoWindow = function () {
             var supercharger = this.superchargers[this.index];
             if (this.lastInfoWindow !== null) {
+                this.lastInfoWindow.unbindAll();
                 this.lastInfoWindow.close();
             }
             var infoWindow = new google.maps.InfoWindow({
@@ -74,6 +75,9 @@ define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePred
             });
             infoWindow.open(this.googleMap, supercharger.marker);
             this.lastInfoWindow = infoWindow;
+            google.maps.event.addListener(infoWindow, 'domready', function () {
+                $(".gm-style-iw").next("div").remove();
+            });
         };
 
 
