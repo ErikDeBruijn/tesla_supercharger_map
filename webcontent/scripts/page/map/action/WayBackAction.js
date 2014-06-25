@@ -65,7 +65,7 @@ define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePred
 
         WayBack.prototype.doNext = function () {
             this.index++;
-            if (this.index < this.superchargers.length - 1) {
+            if (this.index < this.superchargers.length) {
                 this.showNextDate();
                 this.showNextInfoWindow();
                 this.showNextMarker();
