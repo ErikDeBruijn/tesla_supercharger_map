@@ -9,6 +9,9 @@ define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePred
             this.googleMap = googleMap;
             this.lastInfoWindow = null;
             this.index = -1;
+            this.wayBackContainer = $("#way-back-container");
+
+            $("#way-back-close-trigger").click(jQuery.proxy(this.stop, this));
 
             EventBus.addEventListener("way-back-start-event", this.start, this);
         };
@@ -16,14 +19,25 @@ define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePred
         var MONTH_NAMES = [ "January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December" ];
 
+
+        /*
+         * Stop animation.
+         */
+        WayBack.prototype.stop = function (event) {
+            event.preventDefault();
+            this.index = 99999;
+            this.wayBackContainer.hide();
+        };
+
         /**
-         *
+         * Start animation.
          */
         WayBack.prototype.start = function () {
             statusModel.setAllOff();
             statusModel.fireModelChangeEvent();
             EventBus.dispatch("hide-all-control-event");
-            $("#way-back-container").show();
+            this.wayBackContainer.show();
+            this.index = -1;
             this.dateDiv = $("#way-back-date");
 
             this.superchargers = new SiteIterator()
