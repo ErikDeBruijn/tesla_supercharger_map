@@ -10,8 +10,11 @@ define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePred
             this.lastInfoWindow = null;
             this.index = -1;
             this.wayBackContainer = $("#way-back-container");
+            this.delay = 7;
 
             $("#way-back-close-trigger").click(jQuery.proxy(this.stop, this));
+            $("#way-back-fast").click(jQuery.proxy(this.faster, this));
+            $("#way-back-slow").click(jQuery.proxy(this.slower, this));
 
             EventBus.addEventListener("way-back-start-event", this.start, this);
         };
@@ -19,6 +22,19 @@ define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePred
         var MONTH_NAMES = [ "January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December" ];
 
+
+        WayBack.prototype.faster = function (event) {
+            if (this.delay > 1) {
+                this.delay -= 1;
+            }
+            $("#way-back-delay").text("delay:" + this.delay);
+        };
+        WayBack.prototype.slower = function (event) {
+            if(this.delay < 10) {
+                this.delay += 1;
+            }
+            $("#way-back-delay").text("delay:" + this.delay);
+        };
 
         /*
          * Stop animation.
@@ -87,7 +103,7 @@ define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePred
                 this.showNextDate();
                 this.showNextInfoWindow();
                 this.showNextMarker();
-                setTimeout(jQuery.proxy(this.doNext, this), 1350);
+                setTimeout(jQuery.proxy(this.doNext, this), this.delay * 250);
             }
         };
 

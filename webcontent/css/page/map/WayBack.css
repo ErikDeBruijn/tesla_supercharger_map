@@ -1,9 +1,16 @@
 #way-back-container {
-    margin:0;
-    padding:0
+    margin: 0;
+    padding: 0
 }
 
 #way-back-date {
     text-align: center;
     font-size: 3em;
+}
+
+#way-back-delay {
+    font-size: .8em;
+    color: #777777;
+    text-align: center;
+    padding-top: 4px;
 }
