@@ -30,7 +30,7 @@ define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePred
             $("#way-back-delay").text("delay:" + this.delay);
         };
         WayBack.prototype.slower = function (event) {
-            if(this.delay < 10) {
+            if (this.delay < 10) {
                 this.delay += 1;
             }
             $("#way-back-delay").text("delay:" + this.delay);
