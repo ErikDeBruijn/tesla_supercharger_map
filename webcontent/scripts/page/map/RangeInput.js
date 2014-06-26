@@ -42,7 +42,6 @@ define([], function () {
     RangeInput.prototype.setValue = function (newValue) {
         this.setLabelText(newValue);
         this.sliderDiv.val(newValue);
-        this.notifyListeners(this.sliderDiv.val());
     };
 
     RangeInput.prototype.setLabelText = function (newValue) {

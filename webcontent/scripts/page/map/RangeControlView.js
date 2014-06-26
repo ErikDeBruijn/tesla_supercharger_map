@@ -7,6 +7,8 @@ define(['util/EventBus', 'util/Units', 'page/map/RangeInput', 'page/map/RangeMod
     var RangeControlView = function () {
         this.initRangeControl();
         this.initRangeUnitControl();
+
+        EventBus.addEventListener("range-model-changed-event", this.handleModelChange, this);
     };
 
     /**
@@ -24,7 +26,6 @@ define(['util/EventBus', 'util/Units', 'page/map/RangeInput', 'page/map/RangeMod
             rangeModel.fireChangeEvent();
         });
     };
-
 
     RangeControlView.prototype.initRangeUnitControl = function () {
         var control = this;
@@ -51,6 +52,10 @@ define(['util/EventBus', 'util/Units', 'page/map/RangeInput', 'page/map/RangeMod
     RangeControlView.prototype.handleDistanceUnit = function (newUnit) {
         rangeModel.range.setUnit(newUnit);
         this.initRangeControl();
+    };
+
+    RangeControlView.prototype.handleModelChange = function () {
+        this.rangeSlider.setValue(rangeModel.range.getCurrent());
     };
 
     return RangeControlView;
