@@ -5,15 +5,13 @@ define(
     ],
     function (Events, QueryStrings, NavBarDropdown, MapPage, DataPage, ChartsPage, ChangesPage, AboutPage) {
 
-        var PAGE_DEFAULT = "map";
-        var PAGE_OPTIONS = ['map', 'data', 'charts', 'changes', 'about'];
 
         /**
          * Constructor
          */
         var NavBar = function () {
             this.navBarDropdown = new NavBarDropdown();
-            this.currentPage = PAGE_DEFAULT;
+            this.currentPage = QueryStrings.DEFAULT_PAGE;
 
             this.mapPage = new MapPage();
             this.dataPage = new DataPage();
@@ -24,14 +22,8 @@ define(
             this.initListeners();
         };
 
-
         NavBar.prototype.setInitialPage = function () {
-            var directNav = QueryStrings.getByName('Page').toLowerCase();
-            if (PAGE_OPTIONS.indexOf(directNav) > -1) {
-                this.changePage(directNav);
-            } else {
-                this.changePage(PAGE_DEFAULT);
-            }
+            this.changePage(QueryStrings.getPage());
         };
 
         NavBar.prototype.initListeners = function () {

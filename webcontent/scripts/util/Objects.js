@@ -23,6 +23,14 @@ define([], function () {
         return ((object !== null) && (typeof object !== 'undefined'));
     };
 
+    /**
+     * true if a number
+     */
+    Objects.isNumber = function (testArg) {
+        return (typeof testArg === "number");
+    };
+
+
     return Objects;
 
 });

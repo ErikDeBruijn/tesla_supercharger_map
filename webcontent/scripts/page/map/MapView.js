@@ -36,27 +36,9 @@ define(
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Map Initial Settings
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        MapView.INITIAL_LAT = 38.0;
-        MapView.INITIAL_LNG = -96.5;
-        MapView.INITIAL_ZOOM = 5;
 
-        try // We don't want to interrupt the load because of bad parameters
-        {
-            var initialCenter = QueryStrings.getByName("Center");
-            if (initialCenter) {
-                MapView.INITIAL_LAT = parseFloat(initialCenter.split(",")[0]);
-                MapView.INITIAL_LNG = parseFloat(initialCenter.split(",")[1]);
-            }
-
-            var initialZoom = QueryStrings.getByName("Zoom");
-            if ((initialZoom) && (!isNaN(initialZoom))) {
-                MapView.INITIAL_ZOOM = parseInt(initialZoom);
-            }
-        } catch (e) {
-            if (window.console) {
-                window.console.log(e);
-            }
-        }
+        MapView.INITIAL_CENTER = QueryStrings.getCenter();
+        MapView.INITIAL_ZOOM = QueryStrings.getZoom();
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // Initialization
@@ -68,7 +50,7 @@ define(
         MapView.prototype.initMap = function () {
 
             var mapOptions = {
-                center: new google.maps.LatLng(MapView.INITIAL_LAT, MapView.INITIAL_LNG),
+                center: new google.maps.LatLng(MapView.INITIAL_CENTER.latitude, MapView.INITIAL_CENTER.longitude),
                 zoom: MapView.INITIAL_ZOOM,
                 scaleControl: true,
                 mapTypeControl: true,

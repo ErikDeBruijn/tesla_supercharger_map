@@ -6,8 +6,8 @@ define(['util/EventBus', 'util/Units', 'page/map/Range', 'util/QueryStrings'], f
      */
     var RangeModel = function () {
 
-        var rangeMi = QueryStrings.getByName("RangeMi");
-        var rangeKm = QueryStrings.getByName("RangeKm");
+        var rangeMi = QueryStrings.getRangeMi();
+        var rangeKm = QueryStrings.getRangeKm();
 
         if (rangeMi) {
             this.range = new Range(Range.milesToMeters(rangeMi), Units.MI);
@@ -16,7 +16,6 @@ define(['util/EventBus', 'util/Units', 'page/map/Range', 'util/QueryStrings'], f
         } else {
             this.range = new Range(0, Units.MI);
         }
-
 
     };
 
