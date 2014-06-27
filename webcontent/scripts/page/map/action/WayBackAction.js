@@ -23,6 +23,8 @@ define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePred
         var MONTH_NAMES = [ "January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December" ];
 
+        var MONTH_NAMES_SHORT = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
 
         WayBack.prototype.faster = function (event) {
             if (this.delay > 1) {
@@ -95,8 +97,14 @@ define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePred
                 this.lastInfoWindow.unbindAll();
                 this.lastInfoWindow.close();
             }
+
+            var dateOpened = supercharger.dateOpened;
+            var dateString = MONTH_NAMES_SHORT[dateOpened.getMonth()] + " " + dateOpened.getDate() + ", " + dateOpened.getFullYear();
             var infoWindow = new google.maps.InfoWindow({
-                content: supercharger.displayName
+                content: "<div class='way-back-info'>"
+                    + "<div class='title'>" + supercharger.displayName + "</div>" +
+                    "<div class='date'>" + dateString + "</div>" +
+                    "<div>"
             });
             infoWindow.open(this.googleMap, supercharger.marker);
             this.lastInfoWindow = infoWindow;
