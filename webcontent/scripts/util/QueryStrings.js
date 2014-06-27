@@ -45,6 +45,13 @@ define(['util/Strings', 'util/Objects'], function (Strings, Objects) {
         return QueryStrings.DEFAULT_PAGE;
     };
 
+    /**
+     * Wayback
+     */
+    QueryStrings.getWayBack = function () {
+        return "start" === getByName("wayback");
+    };
+
     QueryStrings.getRangeMi = function () {
         return getByName("RangeMi");
     };

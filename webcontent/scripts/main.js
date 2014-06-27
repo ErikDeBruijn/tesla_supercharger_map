@@ -10,7 +10,7 @@ requirejs.config(
 
 
 // Start the main app logic.
-requirejs([ 'nav/NavBar'  ], function (NavBar) {
+requirejs([ 'nav/NavBar', 'lib/bootstrap', 'lib/jquery.doTimeout' ], function (NavBar) {
 
     /**
      * ON DOCUMENT READY

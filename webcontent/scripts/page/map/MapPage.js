@@ -1,15 +1,12 @@
 define(
-    [
-        'lib/bootstrap',
+    [   'util/QueryStrings', 'util/EventBus',
         'page/map/SuperchargerCarousel', 'page/map/StatusControlView', 'page/map/RangeControlView',
         'page/map/action/WayBackAction', 'page/map/action/ToggleRangeCirclesAction', 'page/map/action/ControlToggleAction',
         'page/map/action/StatusSelectionAction', 'page/map/action/ZoomToLocationAction',
         'nav/NavBarDropdown', 'page/map/action/RoutingAction',
-        'page/map/MapView', 'page/map/RenderView','page/map/ZoomView', 'page/map/RoutingPanel', 'lib/jquery.doTimeout'
+        'page/map/MapView', 'page/map/RenderView', 'page/map/ZoomView', 'page/map/RoutingPanel'
     ],
-    function (bootstrap, SuperchargerCarousel, StatusControlView, RangeControlView,
-              WayBackAction, ToggleRangeCirclesAction, ControlToggleAction, StatusSelectionAction, ZoomToLocationAction,
-              NavBarDropDown, RoutingAction, MapView, RenderView, ZoomView, RoutingPanel) {
+    function (QueryStrings, EventBus, SuperchargerCarousel, StatusControlView, RangeControlView, WayBackAction, ToggleRangeCirclesAction, ControlToggleAction, StatusSelectionAction, ZoomToLocationAction, NavBarDropDown, RoutingAction, MapView, RenderView, ZoomView, RoutingPanel) {
 
         /**
          *
@@ -54,6 +51,10 @@ define(
             new ControlToggleAction();
             new StatusSelectionAction();
             new ZoomToLocationAction(this.mapView.googleMap);
+
+            if (QueryStrings.getWayBack()) {
+                EventBus.dispatch("way-back-start-event");
+            }
         };
 
         return MapPage;
