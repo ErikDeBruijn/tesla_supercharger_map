@@ -15,6 +15,7 @@ define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePred
             $("#way-back-close-trigger").click(jQuery.proxy(this.stop, this));
             $("#way-back-fast").click(jQuery.proxy(this.faster, this));
             $("#way-back-slow").click(jQuery.proxy(this.slower, this));
+            $("#way-back-mute").click(jQuery.proxy(this.mute, this));
 
             EventBus.addEventListener("way-back-start-event", this.start, this);
         };
@@ -43,6 +44,11 @@ define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePred
             event.preventDefault();
             this.index = 99999;
             this.wayBackContainer.hide();
+            this.sound.pause();
+        };
+
+        WayBack.prototype.mute = function () {
+            this.sound.muted = !this.sound.muted;
         };
 
         /**
@@ -55,6 +61,9 @@ define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePred
             this.wayBackContainer.show();
             this.index = -1;
             this.dateDiv = $("#way-back-date");
+
+            this.sound = new Audio("sound/destination-01.mp3");
+            this.sound.play();
 
             this.superchargers = new SiteIterator()
                 .withSort(SiteSorting.BY_OPENED_DATE)
