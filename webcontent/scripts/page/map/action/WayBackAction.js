@@ -123,7 +123,11 @@ define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePred
                 this.showNextDate();
                 this.showNextInfoWindow();
                 this.showNextMarker();
-                setTimeout(jQuery.proxy(this.doNext, this), this.delay * 250);
+                var effectiveDelay = this.delay * 250;
+                if(this.index === 0) {
+                    effectiveDelay = 3000;
+                }
+                setTimeout(jQuery.proxy(this.doNext, this), effectiveDelay);
             }
         };
 
