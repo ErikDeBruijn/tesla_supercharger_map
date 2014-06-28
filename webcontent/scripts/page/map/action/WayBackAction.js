@@ -50,7 +50,11 @@ define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePred
         };
 
         WayBack.prototype.mute = function () {
-            this.sound.muted = !this.sound.muted;
+            if(this.sound.currentTime === 0) {
+                this.sound.play();
+            } else {
+                this.sound.muted = !this.sound.muted;
+            }
         };
 
         /**
@@ -65,7 +69,6 @@ define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePred
             this.dateDiv = $("#way-back-date");
 
             this.sound = new Audio("sound/destination-01.mp3");
-            this.sound.play();
 
             this.superchargers = new SiteIterator()
                 .withSort(SiteSorting.BY_OPENED_DATE)
