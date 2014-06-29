@@ -5,6 +5,7 @@ define(['util/Strings', 'util/Objects'], function (Strings, Objects) {
     QueryStrings.DEFAULT_CENTER = { latitude: 38.0, longitude: -96.5};
     QueryStrings.DEFAULT_ZOOM = 5;
     QueryStrings.DEFAULT_PAGE = "map";
+    QueryStrings.DEFAULT_CONTROLS = "range,status";
 
     /**
      * Center
@@ -43,6 +44,14 @@ define(['util/Strings', 'util/Objects'], function (Strings, Objects) {
             return pageLower;
         }
         return QueryStrings.DEFAULT_PAGE;
+    };
+
+    /**
+     * CONTROLS
+     */
+    QueryStrings.getControls = function () {
+        var controls = getByName("Controls");
+        return controls === null ? QueryStrings.DEFAULT_CONTROLS : controls.toLowerCase();
     };
 
     /**

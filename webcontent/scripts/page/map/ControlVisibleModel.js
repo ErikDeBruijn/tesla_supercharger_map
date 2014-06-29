@@ -1,13 +1,14 @@
-define(['util/EventBus'], function (EventBus) {
+define(['util/EventBus', 'util/QueryStrings'], function (EventBus, QueryStrings) {
 
     /**
      *
      * @constructor
      */
     var ControlState = function () {
-        this.rangeControlVisible = true;
-        this.statusControlVisible = true;
-        this.renderControlVisible = false;
+        var controlsParameter = QueryStrings.getControls();
+        this.rangeControlVisible = controlsParameter.indexOf("range") >= 0;
+        this.statusControlVisible = controlsParameter.indexOf("status") >= 0;
+        this.renderControlVisible = controlsParameter.indexOf("render") >= 0;
     };
 
     ControlState.prototype.fireChangeEvent = function () {

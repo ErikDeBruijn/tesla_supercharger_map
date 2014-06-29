@@ -1,4 +1,4 @@
-define(['util/EventBus', 'site/SiteStatus'], function (EventBus, SiteStatus) {
+define(['util/EventBus', 'site/SiteStatus', 'page/map/ControlVisibleModel'], function (EventBus, SiteStatus, controlVisibleModel) {
 
     /**
      *
@@ -12,6 +12,8 @@ define(['util/EventBus', 'site/SiteStatus'], function (EventBus, SiteStatus) {
         this.statusOpenCheckbox.click(jQuery.proxy(this.openClicked, this));
         this.statusConstructionCheckbox.click(jQuery.proxy(this.constructionClicked, this));
         this.statusPermitCheckbox.click(jQuery.proxy(this.permitClicked, this));
+
+        this.handleVisibilityModelChange();
 
         EventBus.addEventListener("status-model-changed-event", this.handleStatusModelChange, this);
         EventBus.addEventListener("control-visible-model-changed-event", this.handleVisibilityModelChange, this)
@@ -40,11 +42,9 @@ define(['util/EventBus', 'site/SiteStatus'], function (EventBus, SiteStatus) {
         toggleCheckbox(this.statusPermitCheckbox, statusModel.showPermit);
     };
 
-    Control.prototype.handleVisibilityModelChange = function (event, controlVisibilityModel) {
-        $("#control-row-status").toggle(controlVisibilityModel.statusControlVisible);
+    Control.prototype.handleVisibilityModelChange = function () {
+        $("#control-row-status").toggle(controlVisibleModel.statusControlVisible);
     };
-
-
 
     return Control;
 

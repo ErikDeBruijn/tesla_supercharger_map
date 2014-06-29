@@ -1,4 +1,5 @@
-define(['util/EventBus', 'page/map/RangeInput', 'page/map/RenderModel', 'lib/spectrum'], function (EventBus, RangeInput, renderModel) {
+define(['util/EventBus', 'page/map/RangeInput', 'page/map/RenderModel', 'page/map/ControlVisibleModel','lib/spectrum'],
+    function (EventBus, RangeInput, renderModel, controlVisibleModel) {
 
 
     /**
@@ -7,6 +8,7 @@ define(['util/EventBus', 'page/map/RangeInput', 'page/map/RenderModel', 'lib/spe
     var RenderView = function () {
         this.initOpacitySliders();
         this.initColorInputs();
+        this.handleVisibilityModelChange();
         EventBus.addEventListener("control-visible-model-changed-event", this.handleVisibilityModelChange, this);
     };
 
@@ -70,8 +72,8 @@ define(['util/EventBus', 'page/map/RangeInput', 'page/map/RenderModel', 'lib/spe
     //
     //- - - - - - - - - - - - - -  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    RenderView.prototype.handleVisibilityModelChange = function (event, controlVisibilityModel) {
-        $("#control-row-rendering").toggle(controlVisibilityModel.renderControlVisible);
+    RenderView.prototype.handleVisibilityModelChange = function () {
+        $("#control-row-rendering").toggle(controlVisibleModel.renderControlVisible);
     };
 
     return RenderView;
