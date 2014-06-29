@@ -27,7 +27,7 @@ define([], function () {
      * true if a number
      */
     Objects.isNumber = function (testArg) {
-        return (typeof testArg === "number");
+        return (typeof testArg === "number") && !isNaN(testArg);
     };
 
 

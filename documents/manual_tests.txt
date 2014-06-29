@@ -73,9 +73,10 @@ Map Page
         () Friendly display name.
         () Close icon.
     () Directions should be displayed below list of waypoints.
-    () Clicking 'x' in route panel title should close the panel.
+    () Clicking 'x' on one waypoint removes it.
         () Directions to removed waypoint should go away.
         () Rendered directions on map should go away.
+    () Clicking 'x' in route panel title should close the panel (put leave any existing waypoints).
 
 ---------------------------------
 Data Page
@@ -118,10 +119,11 @@ About Page
 URL parameters
 ---------------------------------
 
-() Site allows parameter names to have an case (upper or lower).
+() Site allows parameter names to have any case (upper or lower).
 () Page -- should work.
 () Zoom
 () Center
+    () Use default center if values (either lat or long) cannot be parsed.
 () RangeMi/RangeKm
     () Range circles should be enabled and have the range value indicated.
     () Range control slider should be positioned correctly and its text label should show the correct range.
