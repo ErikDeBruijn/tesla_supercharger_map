@@ -9,6 +9,7 @@ define(['util/EventBus', 'util/Units', 'page/map/RangeInput', 'page/map/RangeMod
         this.initRangeUnitControl();
 
         EventBus.addEventListener("range-model-changed-event", this.handleModelChange, this);
+        EventBus.addEventListener("control-visible-model-changed-event", this.handleVisibilityModelChange, this)
     };
 
     /**
@@ -56,6 +57,10 @@ define(['util/EventBus', 'util/Units', 'page/map/RangeInput', 'page/map/RangeMod
 
     RangeControlView.prototype.handleModelChange = function () {
         this.rangeSlider.setValue(rangeModel.range.getCurrent());
+    };
+
+    RangeControlView.prototype.handleVisibilityModelChange = function (event, controlVisibilityModel) {
+        $("#control-row-range").toggle(controlVisibilityModel.rangeControlVisible);
     };
 
     return RangeControlView;

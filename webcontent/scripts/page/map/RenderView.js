@@ -7,7 +7,7 @@ define(['util/EventBus', 'page/map/RangeInput', 'page/map/RenderModel', 'lib/spe
     var RenderView = function () {
         this.initOpacitySliders();
         this.initColorInputs();
-        EventBus.addEventListener("control-visible-model-changed-event", this.handleControlVisibilityChange, this);
+        EventBus.addEventListener("control-visible-model-changed-event", this.handleVisibilityModelChange, this);
     };
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -66,14 +66,11 @@ define(['util/EventBus', 'page/map/RangeInput', 'page/map/RenderModel', 'lib/spe
         renderModel.fireRenderModelChangeEvent();
     };
 
-    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //- - - - - - - - - - - - - - - -- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //
-    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //- - - - - - - - - - - - - -  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    RenderView.prototype.handleControlVisibilityChange = function (event, controlVisibilityModel) {
-        var rowOneChildren = $("#control-row-one").children();
-        rowOneChildren.eq(0).toggle(controlVisibilityModel.rangeControlVisible);
-        rowOneChildren.eq(1).toggle(controlVisibilityModel.statusControlVisible);
+    RenderView.prototype.handleVisibilityModelChange = function (event, controlVisibilityModel) {
         $("#control-row-rendering").toggle(controlVisibilityModel.renderControlVisible);
     };
 

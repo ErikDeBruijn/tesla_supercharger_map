@@ -14,6 +14,7 @@ define(['util/EventBus', 'site/SiteStatus'], function (EventBus, SiteStatus) {
         this.statusPermitCheckbox.click(jQuery.proxy(this.permitClicked, this));
 
         EventBus.addEventListener("status-model-changed-event", this.handleStatusModelChange, this);
+        EventBus.addEventListener("control-visible-model-changed-event", this.handleVisibilityModelChange, this)
     };
 
     Control.prototype.openClicked = function (event) {
@@ -38,6 +39,11 @@ define(['util/EventBus', 'site/SiteStatus'], function (EventBus, SiteStatus) {
         toggleCheckbox(this.statusConstructionCheckbox, statusModel.showConstruction);
         toggleCheckbox(this.statusPermitCheckbox, statusModel.showPermit);
     };
+
+    Control.prototype.handleVisibilityModelChange = function (event, controlVisibilityModel) {
+        $("#control-row-status").toggle(controlVisibilityModel.statusControlVisible);
+    };
+
 
 
     return Control;
