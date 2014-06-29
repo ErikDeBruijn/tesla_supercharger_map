@@ -1,4 +1,5 @@
-define(['util/EventBus', 'util/Units', 'page/map/RangeInput', 'page/map/RangeModel'], function (EventBus, Units, RangeInput, rangeModel) {
+define(['util/EventBus', 'util/Units', 'page/map/RangeInput', 'page/map/RangeModel', 'page/map/ControlVisibleModel'],
+    function (EventBus, Units, RangeInput, rangeModel, controlVisibleModel) {
 
     /**
      *
@@ -7,8 +8,10 @@ define(['util/EventBus', 'util/Units', 'page/map/RangeInput', 'page/map/RangeMod
     var RangeControlView = function () {
         this.initRangeControl();
         this.initRangeUnitControl();
+        this.handleVisibilityModelChange();
 
         EventBus.addEventListener("range-model-changed-event", this.handleModelChange, this);
+        EventBus.addEventListener("control-visible-model-changed-event", this.handleVisibilityModelChange, this)
     };
 
     /**
@@ -56,6 +59,10 @@ define(['util/EventBus', 'util/Units', 'page/map/RangeInput', 'page/map/RangeMod
 
     RangeControlView.prototype.handleModelChange = function () {
         this.rangeSlider.setValue(rangeModel.range.getCurrent());
+    };
+
+    RangeControlView.prototype.handleVisibilityModelChange = function () {
+        $("#control-row-range").toggle(controlVisibleModel.rangeControlVisible);
     };
 
     return RangeControlView;

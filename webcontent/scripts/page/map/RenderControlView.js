@@ -1,4 +1,5 @@
-define(['util/EventBus', 'page/map/RangeInput', 'page/map/RenderModel', 'lib/spectrum'], function (EventBus, RangeInput, renderModel) {
+define(['util/EventBus', 'page/map/RangeInput', 'page/map/RenderModel', 'page/map/ControlVisibleModel','lib/spectrum'],
+    function (EventBus, RangeInput, renderModel, controlVisibleModel) {
 
 
     /**
@@ -7,7 +8,8 @@ define(['util/EventBus', 'page/map/RangeInput', 'page/map/RenderModel', 'lib/spe
     var RenderView = function () {
         this.initOpacitySliders();
         this.initColorInputs();
-        EventBus.addEventListener("control-visible-model-changed-event", this.handleControlVisibilityChange, this);
+        this.handleVisibilityModelChange();
+        EventBus.addEventListener("control-visible-model-changed-event", this.handleVisibilityModelChange, this);
     };
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -66,15 +68,12 @@ define(['util/EventBus', 'page/map/RangeInput', 'page/map/RenderModel', 'lib/spe
         renderModel.fireRenderModelChangeEvent();
     };
 
-    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //- - - - - - - - - - - - - - - -- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //
-    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //- - - - - - - - - - - - - -  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    RenderView.prototype.handleControlVisibilityChange = function (event, controlVisibilityModel) {
-        var rowOneChildren = $("#control-row-one").children();
-        rowOneChildren.eq(0).toggle(controlVisibilityModel.rangeControlVisible);
-        rowOneChildren.eq(1).toggle(controlVisibilityModel.statusControlVisible);
-        $("#control-row-rendering").toggle(controlVisibilityModel.renderControlVisible);
+    RenderView.prototype.handleVisibilityModelChange = function () {
+        $("#control-row-rendering").toggle(controlVisibleModel.renderControlVisible);
     };
 
     return RenderView;

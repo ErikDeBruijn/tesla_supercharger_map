@@ -120,11 +120,16 @@ URL parameters
 ---------------------------------
 
 () Site allows parameter names to have any case (upper or lower).
-() Page -- should work.
-() Zoom
-() Center
-    () Use default center if values (either lat or long) cannot be parsed.
-() RangeMi/RangeKm
-    () Range circles should be enabled and have the range value indicated.
-    () Range control slider should be positioned correctly and its text label should show the correct range.
-    () Range unit selection (mi/km) should reflect the unit of the requested parameter, mi or km, for RangMi, RangeKm respectively.
+() Test each parameter:
+    () Page
+    () Zoom
+    () Center
+        () Use default center if values (either lat or long) cannot be parsed.
+    () RangeMi/RangeKm
+        () Range circles should be enabled and have the range value indicated.
+        () Range control slider should be positioned correctly and its text label should show the correct range.
+        () Range unit selection (mi/km) should reflect the unit of the requested parameter, mi or km, for RangMi, RangeKm respectively.
+    () Controls
+        () none
+        () render,range,status
+    () wayback=start
