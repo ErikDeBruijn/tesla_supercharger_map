@@ -4,9 +4,9 @@ define(
         'page/map/action/WayBackAction', 'page/map/action/ToggleRangeCirclesAction', 'page/map/action/ControlToggleAction',
         'page/map/action/StatusSelectionAction', 'page/map/action/ZoomToLocationAction',
         'nav/NavBarDropdown', 'page/map/action/RoutingAction',
-        'page/map/MapView', 'page/map/RenderView', 'page/map/ZoomView', 'page/map/RoutingPanel'
+        'page/map/MapView', 'page/map/RenderControlView', 'page/map/ZoomView', 'page/map/RoutingPanel'
     ],
-    function (QueryStrings, EventBus, SuperchargerCarousel, StatusControlView, RangeControlView, WayBackAction, ToggleRangeCirclesAction, ControlToggleAction, StatusSelectionAction, ZoomToLocationAction, NavBarDropDown, RoutingAction, MapView, RenderView, ZoomView, RoutingPanel) {
+    function (QueryStrings, EventBus, SuperchargerCarousel, StatusControlView, RangeControlView, WayBackAction, ToggleRangeCirclesAction, ControlToggleAction, StatusSelectionAction, ZoomToLocationAction, NavBarDropDown, RoutingAction, MapView, RenderControlView, ZoomView, RoutingPanel) {
 
         /**
          *
@@ -39,7 +39,7 @@ define(
 
             new NavBarDropDown();
             new SuperchargerCarousel();
-            new RenderView();
+            new RenderControlView();
             new StatusControlView();
             new RangeControlView();
             new ZoomView();
