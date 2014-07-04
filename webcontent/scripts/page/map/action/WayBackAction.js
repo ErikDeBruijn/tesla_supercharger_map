@@ -55,6 +55,11 @@ define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePred
             } else {
                 this.sound.muted = !this.sound.muted;
             }
+            if(this.sound.muted) {
+                $("#mute-button-label").text(" Sound On");
+            } else {
+                $("#mute-button-label").text(" Sound Off");
+            }
         };
 
         /**
