@@ -43,10 +43,13 @@ define(['util/EventBus', 'util/Numbers', 'util/Objects', 'site/SiteIterator', 's
          * Stop animation.
          */
         WayBack.prototype.stop = function (event) {
-            event.preventDefault();
+            if (Objects.isNotNullOrUndef(event)) {
+                event.preventDefault();
+            }
             this.index = 99999;
             this.wayBackContainer.hide();
-            this.sound.pause();
+            this.sound.stop();
+            this.sound = null;
         };
 
         WayBack.prototype.toggleSound = function () {
@@ -125,7 +128,7 @@ define(['util/EventBus', 'util/Numbers', 'util/Objects', 'site/SiteIterator', 's
 
         WayBack.prototype.doNext = function () {
             this.index++;
-            if (this.index < this.superchargers.length) {
+            if (this.index < 5) {
                 this.showNextDate();
                 this.showNextInfoWindow();
                 this.showNextMarker();
@@ -134,6 +137,25 @@ define(['util/EventBus', 'util/Numbers', 'util/Objects', 'site/SiteIterator', 's
                     effectiveDelay = 3000;
                 }
                 setTimeout(jQuery.proxy(this.doNext, this), effectiveDelay);
+            } else {
+                this.fadeOut();
+            }
+        };
+
+        WayBack.prototype.fadeOut = function () {
+            if (!Objects.isNullOrUndef(this.sound)) {
+                var wayBack = this;
+                var theSound = this.sound;
+                this.wayBackContainer.animate({ opacity: 0 }, {
+                    duration: 12000,
+                    step: function (now, fx) {
+                        theSound.volume = now;
+                    },
+                    complete: function () {
+                        wayBack.stop();
+                        wayBack.wayBackContainer.css("opacity", 1);
+                    }
+                });
             }
         };
 
