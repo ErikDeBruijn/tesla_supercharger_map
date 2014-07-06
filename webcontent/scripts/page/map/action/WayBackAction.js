@@ -48,23 +48,13 @@ define(['util/EventBus', 'util/Numbers', 'util/Objects', 'site/SiteIterator', 's
             }
             this.index = 99999;
             this.wayBackContainer.hide();
-            this.sound.stop();
-            this.sound = null;
-        };
-
-        WayBack.prototype.toggleSound = function () {
-            if (Objects.isNullOrUndef(this.sound)) {
-                var songFile = "sound/" + Numbers.getRandomInt(1, 6) + ".mp3";
-                this.sound = new Audio(songFile);
-                this.sound.loop = true;
-                this.sound.play();
-            } else {
-                this.sound.muted = !this.sound.muted;
+            if (Objects.isNotNullOrUndef(this.lastInfoWindow)) {
+                this.lastInfoWindow.close();
+                this.lastInfoWindow = null;
             }
-            if (this.sound.muted) {
-                $("#mute-button-label").text(" Sound On");
-            } else {
-                $("#mute-button-label").text(" Sound Off");
+            if (Objects.isNotNullOrUndef(this.sound)) {
+                this.sound.pause();
+                this.sound = null;
             }
         };
 
@@ -76,8 +66,10 @@ define(['util/EventBus', 'util/Numbers', 'util/Objects', 'site/SiteIterator', 's
             statusModel.fireModelChangeEvent();
             EventBus.dispatch("hide-all-control-event");
             this.wayBackContainer.show();
+            this.wayBackContainer.css('opacity', '1.0');
             this.index = -1;
             this.dateDiv = $("#way-back-date");
+            this.updateSoundButtonText();
 
             this.superchargers = new SiteIterator()
                 .withSort(SiteSorting.BY_OPENED_DATE)
@@ -89,6 +81,8 @@ define(['util/EventBus', 'util/Numbers', 'util/Objects', 'site/SiteIterator', 's
             });
             this.doNext();
         };
+
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         WayBack.prototype.showNextDate = function () {
             var supercharger = this.superchargers[this.index];
@@ -128,7 +122,7 @@ define(['util/EventBus', 'util/Numbers', 'util/Objects', 'site/SiteIterator', 's
 
         WayBack.prototype.doNext = function () {
             this.index++;
-            if (this.index < 5) {
+            if (this.index < this.superchargers.length) {
                 this.showNextDate();
                 this.showNextInfoWindow();
                 this.showNextMarker();
@@ -142,18 +136,39 @@ define(['util/EventBus', 'util/Numbers', 'util/Objects', 'site/SiteIterator', 's
             }
         };
 
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+        WayBack.prototype.toggleSound = function () {
+            if (Objects.isNullOrUndef(this.sound)) {
+                var songFile = "sound/" + Numbers.getRandomInt(1, 6) + ".mp3";
+                this.sound = new Audio(songFile);
+                this.sound.loop = true;
+                this.sound.play();
+            } else {
+                this.sound.muted = !this.sound.muted;
+            }
+            this.updateSoundButtonText();
+        };
+
+        WayBack.prototype.updateSoundButtonText = function () {
+            if (Objects.isNullOrUndef(this.sound) || this.sound.muted) {
+                $("#mute-button-label").text(" Sound On");
+            } else {
+                $("#mute-button-label").text(" Sound Off");
+            }
+        };
+
         WayBack.prototype.fadeOut = function () {
             if (!Objects.isNullOrUndef(this.sound)) {
                 var wayBack = this;
                 var theSound = this.sound;
                 this.wayBackContainer.animate({ opacity: 0 }, {
-                    duration: 12000,
+                    duration: 9000,
                     step: function (now, fx) {
                         theSound.volume = now;
                     },
                     complete: function () {
                         wayBack.stop();
-                        wayBack.wayBackContainer.css("opacity", 1);
                     }
                 });
             }
