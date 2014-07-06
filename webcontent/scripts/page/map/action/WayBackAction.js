@@ -1,5 +1,5 @@
-define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePredicates', 'page/map/StatusModel'],
-    function (EventBus, SiteIterator, SiteSorting, SitePredicates, statusModel) {
+define(['util/EventBus', 'util/Numbers', 'util/Objects', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePredicates', 'page/map/StatusModel'],
+    function (EventBus, Numbers, Objects, SiteIterator, SiteSorting, SitePredicates, statusModel) {
 
         /**
          *
@@ -15,7 +15,7 @@ define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePred
             $("#way-back-close-trigger").click(jQuery.proxy(this.stop, this));
             $("#way-back-fast").click(jQuery.proxy(this.faster, this));
             $("#way-back-slow").click(jQuery.proxy(this.slower, this));
-            $("#way-back-mute").click(jQuery.proxy(this.mute, this));
+            $("#way-back-mute").click(jQuery.proxy(this.toggleSound, this));
 
             EventBus.addEventListener("way-back-start-event", this.start, this);
         };
@@ -49,13 +49,16 @@ define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePred
             this.sound.pause();
         };
 
-        WayBack.prototype.mute = function () {
-            if(this.sound.currentTime === 0) {
+        WayBack.prototype.toggleSound = function () {
+            if (Objects.isNullOrUndef(this.sound)) {
+                var songFile = "sound/" + Numbers.getRandomInt(1, 6) + ".mp3";
+                this.sound = new Audio(songFile);
+                this.sound.loop = true;
                 this.sound.play();
             } else {
                 this.sound.muted = !this.sound.muted;
             }
-            if(this.sound.muted) {
+            if (this.sound.muted) {
                 $("#mute-button-label").text(" Sound On");
             } else {
                 $("#mute-button-label").text(" Sound Off");
@@ -72,8 +75,6 @@ define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePred
             this.wayBackContainer.show();
             this.index = -1;
             this.dateDiv = $("#way-back-date");
-
-            this.sound = new Audio("sound/destination-01.mp3");
 
             this.superchargers = new SiteIterator()
                 .withSort(SiteSorting.BY_OPENED_DATE)
@@ -129,7 +130,7 @@ define(['util/EventBus', 'site/SiteIterator', 'site/SiteSorting', 'site/SitePred
                 this.showNextInfoWindow();
                 this.showNextMarker();
                 var effectiveDelay = this.delay * 250;
-                if(this.index === 0) {
+                if (this.index === 0) {
                     effectiveDelay = 3000;
                 }
                 setTimeout(jQuery.proxy(this.doNext, this), effectiveDelay);
