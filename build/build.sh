@@ -30,6 +30,7 @@ ${NODE_CMD} r.js -o build.js
 
 cp -R ${DIR_PROJECT}/fonts ${DIR_BUILT}
 cp -R ${DIR_PROJECT}/images ${DIR_BUILT}
+cp -R ${DIR_PROJECT}/sound ${DIR_BUILT}
 
 cp ${DIR_PROJECT}/* ${DIR_BUILT}
 cp ${DIR_PROJECT}/scripts/require.js ${DIR_BUILT}/scripts
