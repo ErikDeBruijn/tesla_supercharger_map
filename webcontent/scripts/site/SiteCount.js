@@ -20,6 +20,10 @@ define(['site/SiteIterator', 'site/SitePredicates'], function (SiteIterator, Sit
         var numberResult = count2 - count1;
         return numberResult !== 0 ? numberResult : SiteCount.sortByKeyStringValue(mapOne, mapTwo);
     };
+    SiteCount.sortByTotalCountThenOpenCount = function (mapOne, mapTwo) {
+        var numberResult = SiteCount.SortByTotalCount(mapOne, mapTwo);
+        return numberResult !== 0 ? numberResult : SiteCount.SortByOpenCount(mapOne, mapTwo);
+    }
 
     /**
      * Site count.
