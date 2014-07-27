@@ -7,22 +7,31 @@ define(['site/SiteIterator', 'site/SitePredicates'], function (SiteIterator, Sit
     var SiteCount = function () {
     };
 
-    SiteCount.sortByKeyStringValue = function (mapOne, mapTwo) {
+    function sort (mapOne, mapTwo) {
+
+        // Sort by number open
+        var openCount1 = mapOne.open;
+        var openCount2 = mapTwo.open;
+        if(openCount1 !== openCount2) {
+            return (openCount2 - openCount1);
+        }
+
+        // Then by open + construction
+        var openAndConstruct1 = openCount1 + mapOne.construction;
+        var openAndConstruct2 = openCount2 + mapTwo.construction;
+        if(openAndConstruct1 !== openAndConstruct2) {
+            return (openAndConstruct2 - openAndConstruct1);
+        }
+
+        // Then by open + construction + permit
+        var count1 = openAndConstruct1 + mapOne.permit;
+        var count2 = openAndConstruct2 + mapTwo.permit;
+        if(count1 !== count2) {
+            return (count2 - count1);
+        }
+
+        // Finally by country name.
         return mapOne.key.localeCompare(mapTwo.key);
-    };
-    SiteCount.sortByOpenCount = function (mapOne, mapTwo) {
-        var numberResult = mapTwo.open - mapOne.open;
-        return numberResult !== 0 ? numberResult : SiteCount.sortByKeyStringValue(mapOne, mapTwo);
-    };
-    SiteCount.sortByTotalCount = function (mapOne, mapTwo) {
-        var count1 = mapOne.open + mapOne.construction + mapOne.permit;
-        var count2 = mapTwo.open + mapTwo.construction + mapTwo.permit;
-        var numberResult = count2 - count1;
-        return numberResult !== 0 ? numberResult : SiteCount.sortByKeyStringValue(mapOne, mapTwo);
-    };
-    SiteCount.sortByTotalCountThenOpenCount = function (mapOne, mapTwo) {
-        var numberResult = SiteCount.SortByTotalCount(mapOne, mapTwo);
-        return numberResult !== 0 ? numberResult : SiteCount.SortByOpenCount(mapOne, mapTwo);
     }
 
     /**
@@ -83,7 +92,7 @@ define(['site/SiteIterator', 'site/SitePredicates'], function (SiteIterator, Sit
             .withPredicate(SitePredicates.NOT_USER_ADDED)
             .withPredicate(SitePredicates.IS_COUNTED);
 
-        return SiteCount.getCountListImpl(siteIterator, 'country', SiteCount.sortByOpenCount);
+        return SiteCount.getCountListImpl(siteIterator, 'country', sort);
 
     };
 
@@ -94,7 +103,7 @@ define(['site/SiteIterator', 'site/SitePredicates'], function (SiteIterator, Sit
             .withPredicate(SitePredicates.IS_COUNTED)
             .withPredicate(SitePredicates.IS_USA);
 
-        return SiteCount.getCountListImpl(siteIterator, 'state', SiteCount.sortByTotalCount);
+        return SiteCount.getCountListImpl(siteIterator, 'state', sort);
 
     };
 
