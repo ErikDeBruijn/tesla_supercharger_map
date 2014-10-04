@@ -31,6 +31,7 @@ define(
             EventBus.addEventListener("status-model-changed-event", this.handleStatusModelChange, this);
             EventBus.addEventListener("range-model-changed-event", this.redrawCircles, this);
             EventBus.addEventListener("render-model-changed-event", this.redrawCircles, this);
+            EventBus.addEventListener("set-mapview-link-event", this.mapviewToLink, this);
         };
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -138,6 +139,30 @@ define(
                 radius: rangeModel.range.getRangeMeters(),
                 clickable: false
             };
+        };
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Menu Event handlers
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        MapView.prototype.mapviewToLink = function (event) {
+            var zoom = this.googleMap.getZoom();
+            var latLng = this.googleMap.getCenter();
+            rng = rangeModel;
+            var linkStr = window.location.href.split('?')[0];
+            linkStr += '?Center='+latLng.toUrlValue()+'&Zoom='+zoom;
+            if(typeof rangeModel.range === 'object' && 
+                typeof rangeModel.range.rangeMeters === 'number' && 
+                rangeModel.rangeMeters !== 0) {
+                var range = Math.round(rangeModel.range.rangeMeters / rangeModel.range.displayUnit.meters);
+                if(rangeModel.range.displayUnit.abbrevation == 'km') {
+                    linkStr += '&RangeKm='+range;
+                }
+                if(rangeModel.range.displayUnit.abbrevation == 'mi') {
+                    linkStr += '&RangeMi='+range;
+                }
+            }
+            $('#link-input').val(linkStr+'&');
+            $("#go-to-button").attr('disabled',false);
         };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
