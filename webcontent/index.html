@@ -69,6 +69,7 @@ Navigation Bar
                             Selection</a></li>
                         <li><a id="rendering-menu-item" href="#rendering-menu-item"><span class="glyphicon glyphicon-unchecked"></span>&nbsp;Rendering
                             Options</a></li>
+                        <li><a id="link-menu-item" href="#link-menu-item"><span class="glyphicon glyphicon-link"></span>&nbsp;Link To This View...</a></li>
                         <li class="divider"></li>
                         <li><a href="#way-back-menu-item">Way Back</a></li>
                     </ul>
@@ -407,6 +408,24 @@ PAGE: about
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-primary">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="link-dialog" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Link of current view</h4>
+            </div>
+            <div class="modal-body">
+                <label for="link-input">Link:&nbsp;</label>
+                <input id="link-input" type="text">
+            </div>
+            <div class="modal-footer">
+                <button disabled id="go-to-button" type="button" class="btn btn-default btn-success" data-dismiss="modal">Go to!</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Dismiss</button>
             </div>
         </div>
     </div>
